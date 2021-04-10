@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Suivi de voyage</string>
+    <string name="title_activity_maps">Suivi de voyage</string>
+    <string name="create_new_account">Créer un nouveau compte</string>
+    <string name="register_email_address">Entrer votre adresse mail</string>
+    <string name="register_repeat_password">répéter le mot de passe</string>
+    <string name="enter_password">mot de passe</string>
+    <string name="already_have_an_account">Vous avez déjà un compte ?</string>
+    <string name="Register">S\'enregistrer</string>
+    <string name="Login">Se connecter</string>
+    <string name="guest">Invité</string>
+    <string name="enter_a_secret_code">Entrer un code secret</string>
+    <string name="no_account_yeat">Pas encore de compte</string>
+    <string name="signInGuest">"C'est partis "</string>
+    <string name="or">ou</string>
+    <string name="member">Espace membre</string>
+</resources>
