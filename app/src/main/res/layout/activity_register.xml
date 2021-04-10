@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/DigitalBlueMapWorld"
-    tools:context=".register">
+    tools:context=".Register">
 
     <TextView
         android:id="@+id/titleRegisterActivity"
@@ -42,8 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp"
+        android:autofillHints=""
         android:background="@color/common_google_signin_btn_text_light_default"
-        android:backgroundTintMode="add"
         android:ems="10"
         android:hint="@string/register_email_address"
         android:inputType="textEmailAddress"
@@ -54,8 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerSubTitle"
-        app:layout_constraintVertical_bias="0.25"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.25" />
 
     <EditText
         android:id="@+id/editText"
@@ -66,7 +65,8 @@
         android:background="@color/common_google_signin_btn_text_light_default"
         android:backgroundTintMode="add"
         android:ems="10"
-        android:hint="@string/register_enter_new_password"
+        android:hint="@string/enter_password"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="@color/white"
@@ -75,10 +75,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerEmailAddress"
-        app:layout_constraintVertical_bias="0.05"
-        android:importantForAutofill="no" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <EditText
+        android:id="@+id/editText2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -87,6 +87,7 @@
         android:backgroundTintMode="add"
         android:ems="10"
         android:hint="@string/register_repeat_password"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="@color/white"
@@ -95,7 +96,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText"
-        app:layout_constraintVertical_bias="0.05"
-        android:importantForAutofill="no" />
+        app:layout_constraintVertical_bias="0.05" />
+
+    <Button
+        android:id="@+id/btnCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/create_new_account"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintVertical_bias="0.20" />
+
+    <TextView
+        android:id="@+id/txtViewAlreadyAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/already_have_an_account"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registerLogin"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/registerLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/Login"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txtViewAlreadyAccount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

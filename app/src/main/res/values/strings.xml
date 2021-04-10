@@ -6,4 +6,6 @@
     <string name="register_email_address">Enter a valid email address</string>
     <string name="register_repeat_password">Repeat the password</string>
     <string name="enter_password">Enter a password</string>
+    <string name="already_have_an_account">Already have an account ?</string>
+    <string name="Login">Login</string>
 </resources>
