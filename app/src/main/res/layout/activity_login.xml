@@ -127,13 +127,34 @@
         android:id="@+id/btnSignInMember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25sp"
         android:backgroundTint="@color/white"
         android:text="@string/Login"
         android:textColor="@color/black"
-        android:layout_marginTop="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/enterPassword"
         app:layout_constraintTop_toBottomOf="@+id/enterPassword" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleSignInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/txtViewOr"
+        app:layout_constraintEnd_toEndOf="@+id/enterPassword"
+        app:layout_constraintTop_toTopOf="@+id/txtViewOr" />
+
+    <TextView
+        android:id="@+id/txtViewOr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/or"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSignInMember"
+        app:layout_constraintEnd_toStartOf="@+id/googleSignInButton"
+        app:layout_constraintStart_toEndOf="@+id/btnSignInMember"
+        app:layout_constraintTop_toTopOf="@+id/btnSignInMember" />
 
     <TextView
         android:id="@+id/txtViewAlreadyAccount"
