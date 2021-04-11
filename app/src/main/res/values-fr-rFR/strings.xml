@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Suivi de voyage</string>
-    <string name="title_activity_maps">Suivi de voyage</string>
+    <string name="app_name">Journey Tracking</string>
+    <string name="title_activity_maps">Journey Tracking</string>
     <string name="create_new_account">Créer un nouveau compte</string>
     <string name="register_email_address">Entrer votre adresse mail</string>
     <string name="register_repeat_password">répéter le mot de passe</string>
