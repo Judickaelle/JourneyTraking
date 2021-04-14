@@ -20,5 +20,7 @@
     <color name="orange">#FF7F00</color>
     <color name="red">#FF0000</color>
 
+    <color name="blue_map_monde">#171F2A</color>
+
     <color name="common_google_signin_btn_text_light_default">#90000000</color>
 </resources>
