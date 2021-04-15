@@ -2,9 +2,12 @@ package com.judickaelle.pelletier.journeytracking;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -29,7 +32,10 @@ import androidx.appcompat.widget.Toolbar;
 
 public class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private TextView nav_header_title;
+    private ImageView nav_header_imageProfil;
     private DrawerLayout drawer;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        nav_header_title = findViewById(R.id.nav_header_title);
+        nav_header_imageProfil = findViewById(R.id.nav_header_imageProfil);
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -55,6 +63,11 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                     new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
+
+        //extract information from user
+        firebaseAuth = FirebaseAuth.getInstance();
+        Log.d("tag", "onCreate :" + firebaseAuth.getCurrentUser().getEmail() +
+                firebaseAuth.getCurrentUser().getDisplayName());
     }
 
     //the method that enable to pass fom one fragment to anonther one
@@ -69,7 +82,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new GalleryFragment()).commit();
                 break;
-            case R.id.nav_sign_out: ;
+            case R.id.nav_sign_out:
+                logout();
                 Toast.makeText(this, R.string.press_log_out, Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -86,13 +100,13 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
     }
 
-    private void logout(final View view){
-        //FirebaseAuth.getInstance().signOut();
+    private void logout(){
+        FirebaseAuth.getInstance().signOut();
         GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build())
                 .signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                startActivity(new Intent(view.getContext(), Login.class));
+                startActivity(new Intent(getApplicationContext(), Login.class));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

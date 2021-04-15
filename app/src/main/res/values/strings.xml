@@ -19,7 +19,6 @@
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="nav_header_title" translatable="false">Android Studio</string>
-    <string name="nav_header_desc" translatable="false">Navigation header</string>
 
     <string name="menu_home" translatable="false">My journey</string>
     <string name="menu_gallery" translatable="false">Gallery</string>
@@ -27,4 +26,6 @@
     <string name="sign_out" translatable="false">Sign out</string>
     <string name="my_account" translatable="false">My account</string>
     <string name="press_log_out">You\'re log out</string>
+
+    <string name="IdTocken" translatable="false">418964118685-ftp6kr407282glb6urmlh0mlkccjqf87.apps.googleusercontent.com</string>
 </resources>
