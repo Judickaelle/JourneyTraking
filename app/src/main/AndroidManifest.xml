@@ -7,6 +7,7 @@
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,25 +15,24 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/journey_tracking_logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.JourneyTracking" >
+        android:theme="@style/Theme.JourneyTracking.NoActionBar" >
         <activity
-            android:name=".NavigationDrawerActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.JourneyTracking.NoActionBar" >
-        </activity>
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".Register" />
-        <activity android:name=".Login" >
+            android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Register"/>
+        <activity android:name=".NavigationDrawerActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.ALTERNATIVE"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".MapsActivity" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
 </manifest>

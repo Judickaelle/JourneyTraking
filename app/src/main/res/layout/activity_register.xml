@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#171F2A"
+    android:background="@color/blue_map_monde"
     tools:context=".Register">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/registerSubTitle" />
 
         <EditText
-            android:id="@+id/enterPassword"
+            android:id="@+id/registerEnterPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
@@ -81,7 +81,7 @@
             app:layout_constraintTop_toBottomOf="@+id/registerEmailAddress"/>
 
         <EditText
-            android:id="@+id/repeatPassword"
+            android:id="@+id/registerRepeatPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
@@ -98,7 +98,7 @@
             android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enterPassword"/>
+            app:layout_constraintTop_toBottomOf="@+id/registerEnterPassword"/>
 
         <Button
             android:id="@+id/btnCreateAccount"
@@ -110,7 +110,7 @@
             android:layout_marginTop="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/repeatPassword"/>
+            app:layout_constraintTop_toBottomOf="@+id/registerRepeatPassword"/>
 
         <TextView
             android:id="@+id/txtViewAlreadyAccount"
@@ -120,14 +120,14 @@
             android:layout_marginTop="210dp"
             android:text="@string/already_have_an_account"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/registerLogin"
+            app:layout_constraintEnd_toStartOf="@+id/txtViewRegisterLogin"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnCreateAccount" />
 
         <TextView
-            android:id="@+id/registerLogin"
+            android:id="@+id/txtViewRegisterLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="210dp"
@@ -138,6 +138,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/txtViewAlreadyAccount" />
+
+        <ProgressBar
+            android:id="@+id/registerProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnCreateAccount" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -107,6 +107,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             @Override
             public void onSuccess(Void aVoid) {
                 startActivity(new Intent(getApplicationContext(), Login.class));
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

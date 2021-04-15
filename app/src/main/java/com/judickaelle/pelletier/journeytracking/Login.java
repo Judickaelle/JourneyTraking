@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class Login extends Activity {
 
     private SignInButton googleSignIn;
+    private TextView loginToRegiter;
     private Button memberSignIn;
     private Button secretCodeSignIn;
     private GoogleSignInOptions gso;
@@ -45,6 +47,7 @@ public class Login extends Activity {
         googleSignIn = findViewById(R.id.googleSignInButton);
         memberSignIn = findViewById(R.id.btnSignInMember);
         secretCodeSignIn = findViewById(R.id.btnSignInGuest);
+        loginToRegiter = findViewById(R.id.txtLoginToRegister);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -70,6 +73,15 @@ public class Login extends Activity {
             public void onClick(View v) {
                 Intent googlesign = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(googlesign, RC_SIGN_IN);
+            }
+        });
+
+        //go to the register activity
+        loginToRegiter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Register.class));
+                finish();
             }
         });
     }

@@ -163,13 +163,13 @@
             android:layout_marginTop="110dp"
             android:text="@string/no_account_yeat"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/registerLogin"
+            app:layout_constraintEnd_toStartOf="@+id/txtLoginToRegister"
             app:layout_constraintTop_toBottomOf="@+id/txtViewOr"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/registerLogin"
+            android:id="@+id/txtLoginToRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Register"

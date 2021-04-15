@@ -22,10 +22,15 @@
 
     <string name="menu_home" translatable="false">My journey</string>
     <string name="menu_gallery" translatable="false">Gallery</string>
-    <string name="menu_slideshow" translatable="false">Slideshow</string>
     <string name="sign_out" translatable="false">Sign out</string>
     <string name="my_account" translatable="false">My account</string>
     <string name="press_log_out">You\'re log out</string>
 
     <string name="IdTocken" translatable="false">418964118685-ftp6kr407282glb6urmlh0mlkccjqf87.apps.googleusercontent.com</string>
+    <string name="register_email_error">A valid email is required</string>
+    <string name="register_pwd_error">Password is required</string>
+    <string name="register_pwd_length_error">Password must have more than 5 characters</string>
+    <string name="register_pwd_not_equals">Passwords must be the same</string>
+    <string name="register_user_created">User created</string>
+    <string name="error">Error : </string>
 </resources>
