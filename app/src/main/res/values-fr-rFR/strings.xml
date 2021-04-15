@@ -15,4 +15,5 @@
     <string name="signInGuest">"C'est partis "</string>
     <string name="or">ou</string>
     <string name="member">Espace membre</string>
+    <string name="press_log_out">You\'re log out</string>
 </resources>

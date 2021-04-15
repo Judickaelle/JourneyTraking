@@ -2,6 +2,7 @@ package com.judickaelle.pelletier.journeytracking;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class NavigationDrawerActivity extends AppCompatActivity {
+public class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
 
@@ -39,11 +40,41 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
+        //to have a toogle that enable on a much easier way the navigationView's opening
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        //when we start the activity, the message fragment is showing up
+        if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new HomeFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_home);
+        }
+    }
+
+    //the method that enable to pass fom one fragment to anonther one
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new HomeFragment()).commit();
+                break;
+            case R.id.nav_gallery:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new GalleryFragment()).commit();
+                break;
+            case R.id.nav_sign_out: ;
+                Toast.makeText(this, R.string.press_log_out, Toast.LENGTH_SHORT).show();
+                break;
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
@@ -55,7 +86,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         }
     }
 
-    /*private void logout(final View view){
+    private void logout(final View view){
         //FirebaseAuth.getInstance().signOut();
         GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build())
                 .signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -69,5 +100,5 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                 Toast.makeText(NavigationDrawerActivity.this, "Signout Failed", Toast.LENGTH_SHORT).show();
             }
         });
-    }*/
+    }
 }
