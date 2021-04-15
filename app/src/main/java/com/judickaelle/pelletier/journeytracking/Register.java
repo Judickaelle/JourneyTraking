@@ -56,7 +56,7 @@ public class Register extends AppCompatActivity {
                 String repeatPassword = registerRepeatPwd.getText().toString().trim();
 
                 //we are checking if all the information are correct to allow the use's registering
-                if(TextUtils.isEmpty(emailAdress) && Patterns.EMAIL_ADDRESS.matcher(emailAdress).matches()){
+                if(TextUtils.isEmpty(emailAdress)||!Patterns.EMAIL_ADDRESS.matcher(emailAdress).matches()){
                     registerEmail.setError(getString(R.string.register_email_error));
                     return;
                 }
@@ -74,15 +74,14 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
-                //all conditions are right. we can start registering the user
-                progressBar.setVisibility(View.VISIBLE);
-
+                //all conditions are right. we can start
                 //register the user in Firebase
                 fAuth.createUserWithEmailAndPassword(emailAdress,password).addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
                              @Override
                              public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
+                                    progressBar.setVisibility(View.VISIBLE);
                                     Toast.makeText(Register.this, R.string.register_user_created, Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
                                     finish();
