@@ -30,4 +30,5 @@
     <string name="sign_out">Se déconnecter</string>
     <string name="my_account">Mon compte</string>
     <string name="signout_failed">Sign out failed</string>
+    <string name="secret_key">Secret Key</string>
 </resources>
