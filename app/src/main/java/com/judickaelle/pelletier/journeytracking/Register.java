@@ -1,6 +1,5 @@
 package com.judickaelle.pelletier.journeytracking;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,9 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Register extends AppCompatActivity {
@@ -47,49 +43,42 @@ public class Register extends AppCompatActivity {
         }
 
         //handle the register bouton
-        btnCreateAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String emailAdress = registerEmail.getText().toString().trim();
-                String password = registerEnterPwd.getText().toString().trim();
-                String repeatPassword = registerRepeatPwd.getText().toString().trim();
+        btnCreateAccount.setOnClickListener(v -> {
+            String emailAdress = registerEmail.getText().toString().trim();
+            String password = registerEnterPwd.getText().toString().trim();
+            String repeatPassword = registerRepeatPwd.getText().toString().trim();
 
-                //we are checking if all the information are correct to allow the use's registering
-                if(TextUtils.isEmpty(emailAdress)||!Patterns.EMAIL_ADDRESS.matcher(emailAdress).matches()){
-                    registerEmail.setError(getString(R.string.register_email_error));
-                    return;
-                }
-                if(TextUtils.isEmpty(password)){
-                    registerEnterPwd.setError(getString(R.string.register_pwd_error));
-                    return;
-                }else if (password.length() < 5){
-                    registerEnterPwd.setError(getString(R.string.register_pwd_length_error));
-                    return;
-                }
-                if(password.equals(repeatPassword)){
-                    Log.d("tag", "pwd = " + password + " repeat pwd = " + repeatPassword);
-                }else{
-                    registerRepeatPwd.setError(getString(R.string.register_pwd_not_equals));
-                    return;
-                }
-
-                //all conditions are right. we can start
-                //register the user in Firebase
-                fAuth.createUserWithEmailAndPassword(emailAdress,password).addOnCompleteListener(
-                        new OnCompleteListener<AuthResult>() {
-                             @Override
-                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    progressBar.setVisibility(View.VISIBLE);
-                                    Toast.makeText(Register.this, R.string.register_user_created, Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
-                                    finish();
-                                }else {
-                                    Toast.makeText(Register.this, getString(R.string.error) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                             }
-                         });
+            //we are checking if all the information are correct to allow the use's registering
+            if(TextUtils.isEmpty(emailAdress)||!Patterns.EMAIL_ADDRESS.matcher(emailAdress).matches()){
+                registerEmail.setError(getString(R.string.register_email_error));
+                return;
             }
+            if(TextUtils.isEmpty(password)){
+                registerEnterPwd.setError(getString(R.string.register_pwd_error));
+                return;
+            }else if (password.length() < 5){
+                registerEnterPwd.setError(getString(R.string.register_pwd_length_error));
+                return;
+            }
+            if(password.equals(repeatPassword)){
+                Log.d("tag", "pwd = " + password + " repeat pwd = " + repeatPassword);
+            }else{
+                registerRepeatPwd.setError(getString(R.string.register_pwd_not_equals));
+                return;
+            }
+
+            //all conditions are right. we can start
+            //register the user in Firebase
+            fAuth.createUserWithEmailAndPassword(emailAdress,password).addOnCompleteListener(task -> {
+               if(task.isSuccessful()){
+                   progressBar.setVisibility(View.VISIBLE);
+                   Toast.makeText(Register.this, R.string.register_user_created, Toast.LENGTH_SHORT).show();
+                   startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
+                   finish();
+               }else {
+                   Toast.makeText(Register.this, getString(R.string.error) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+               }
+            });
         });
 
         //go to the login activity
@@ -97,12 +86,9 @@ public class Register extends AppCompatActivity {
     }
 
     public void OpenLoginactivity(){
-        registerToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Login.class));
-                finish();
-            }
+        registerToLogin.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), Login.class));
+            finish();
         });
     }
 }

@@ -15,15 +15,13 @@
     <string name="or">OR</string>
     <string name="member">Member space</string>
 
-    <string name="title_activity_main" translatable="false">MainActivity</string>
-    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
-    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
-    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="title_activity_main">Main Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="menu_home" translatable="false">My journey</string>
-    <string name="menu_gallery" translatable="false">Gallery</string>
-    <string name="sign_out" translatable="false">Sign out</string>
-    <string name="my_account" translatable="false">My account</string>
+    <string name="menu_home">My journey</string>
+    <string name="sign_out">Sign out</string>
+    <string name="my_account">My account</string>
     <string name="press_log_out">You\'re log out</string>
 
     <string name="IdTocken" translatable="false">418964118685-ftp6kr407282glb6urmlh0mlkccjqf87.apps.googleusercontent.com</string>
@@ -34,4 +32,5 @@
     <string name="register_user_created">User created</string>
     <string name="error">Error : </string>
     <string name="authentication">Authentication successful </string>
+    <string name="signout_failed">Sign out failed</string>
 </resources>

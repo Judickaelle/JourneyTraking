@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -20,11 +18,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
@@ -38,7 +33,6 @@ public class  Login extends Activity {
     private Button memberSignIn;
     private Button secretCodeSignIn;
 
-    private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth firebaseAuth;
     private static final int RC_SIGN_IN = 9001;
@@ -61,9 +55,6 @@ public class  Login extends Activity {
         //connection of user
         UserConnection();
 
-        //go to the member space
-        OpenNavigationDrawerActivity();
-
         //go to the register activity
         OpenRegisterActivity();
 
@@ -78,45 +69,38 @@ public class  Login extends Activity {
     }
 
     public void ConnectionWithEmailAndPwd(){
-        //TODO validate the user input and if the infomations are correct we let them go to the main activity
-        memberSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String emailAdress = txtLoginWithEmail.getText().toString().trim();
-                String password = txtLoginWithPwd.getText().toString().trim();
+        //validate the user input and if the infomations are correct we let them go to the main activity
+        memberSignIn.setOnClickListener(v -> {
+            String emailAdress = txtLoginWithEmail.getText().toString().trim();
+            String password = txtLoginWithPwd.getText().toString().trim();
 
-                //we are checking if all the information are correct to allow the use's registering
-                if(TextUtils.isEmpty(emailAdress)||!Patterns.EMAIL_ADDRESS.matcher(emailAdress).matches()){
-                    txtLoginWithEmail.setError(getString(R.string.register_email_error));
-                    return;
-                }
-                if(TextUtils.isEmpty(password)){
-                    txtLoginWithPwd.setError(getString(R.string.register_pwd_error));
-                    return;
-                }
-
-                //Authenticate the user
-                firebaseAuth.signInWithEmailAndPassword(emailAdress, password).addOnCompleteListener(
-                        new OnCompleteListener<AuthResult>() {
-                             @Override
-                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                 if(task.isSuccessful()){
-                                     Toast.makeText(Login.this, getString(R.string.authentication), Toast.LENGTH_SHORT).show();
-                                     startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
-                                 }else {
-                                     Toast.makeText(Login.this, getString(R.string.error) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                 }
-                             }
-                         }
-                );
+            //we are checking if all the information are correct to allow the use's registering
+            if(TextUtils.isEmpty(emailAdress)||!Patterns.EMAIL_ADDRESS.matcher(emailAdress).matches()){
+                txtLoginWithEmail.setError(getString(R.string.register_email_error));
+                return;
             }
+            if(TextUtils.isEmpty(password)){
+                txtLoginWithPwd.setError(getString(R.string.register_pwd_error));
+                return;
+            }
+
+            //Authenticate the user
+            firebaseAuth.signInWithEmailAndPassword(emailAdress, password).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            Toast.makeText(Login.this, getString(R.string.authentication), Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
+                        }else {
+                            Toast.makeText(Login.this, getString(R.string.error) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+            );
         });
     }
 
     public void ConnectionWithGoogle(){
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.IdTocken))
                 .requestEmail()
                 .build();
@@ -130,6 +114,12 @@ public class  Login extends Activity {
             Toast.makeText(this, "user is Logged in Already ", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
         }
+
+        //When google sign in button is clicked
+        googleSignIn.setOnClickListener(v -> {
+            Intent googlesign = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(googlesign, RC_SIGN_IN);
+        });
     }
 
     @Override
@@ -147,17 +137,11 @@ public class  Login extends Activity {
                 AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(), null);
 
                 //register the user using firebaseAuth
-                firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(getApplicationContext(), R.string.authentication, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(task -> {
+                    Toast.makeText(getApplicationContext(), R.string.authentication, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
+                }).addOnFailureListener(e -> {
 
-                    }
                 });
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -167,28 +151,9 @@ public class  Login extends Activity {
     }
 
     public void OpenRegisterActivity(){
-        loginToRegiter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Register.class));
-                finish();
-            }
+        loginToRegiter.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), Register.class));
+            finish();
         });
     }
-
-    public void OpenNavigationDrawerActivity(){
-        //When google sign in button is clicked
-        googleSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent googlesign = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(googlesign, RC_SIGN_IN);
-            }
-        });
-
-        //When member sign in button is clicked
-        //TODO implement the function
-    }
-
-
 }
