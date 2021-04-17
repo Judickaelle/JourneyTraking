@@ -23,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Register extends AppCompatActivity {
 
     private EditText registerEmail, registerEnterPwd, registerRepeatPwd;
-    private Button btnCreateAccount;
     private FirebaseAuth fAuth;
     private TextView registerToLogin;
     private ProgressBar progressBar;
@@ -36,7 +35,7 @@ public class Register extends AppCompatActivity {
         registerEmail = findViewById(R.id.registerEmailAddress);
         registerEnterPwd = findViewById(R.id.registerEnterPassword);
         registerRepeatPwd = findViewById(R.id.registerRepeatPassword);
-        btnCreateAccount = findViewById(R.id.btnCreateAccount);
+        Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
         registerToLogin = findViewById(R.id.txtViewRegisterLogin);
 
         fAuth = FirebaseAuth.getInstance();

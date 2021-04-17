@@ -21,4 +21,6 @@
     <string name="register_pwd_length_error">Password must have more than 5 characters</string>
     <string name="register_pwd_not_equals">Passwords must be the same</string>
     <string name="register_user_created">User created</string>
+    <string name="error">Error : </string>
+    <string name="authentication">Authentication :</string>
 </resources>

@@ -10,7 +10,7 @@
     <string name="Login">Sign in</string>
     <string name="guest">Guest</string>
     <string name="enter_a_secret_code">Enter a secret code</string>
-    <string name="no_account_yeat">no account yeat ?</string>
+    <string name="no_account_yeat">no account yeat?</string>
     <string name="signInGuest">Take me in</string>
     <string name="or">OR</string>
     <string name="member">Member space</string>
@@ -33,4 +33,5 @@
     <string name="register_pwd_not_equals">Passwords must be the same</string>
     <string name="register_user_created">User created</string>
     <string name="error">Error : </string>
+    <string name="authentication">Authentication successful </string>
 </resources>
