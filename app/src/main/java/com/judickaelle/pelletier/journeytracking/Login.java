@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,22 +28,28 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class Login extends Activity {
+public class  Login extends Activity {
+
+    private TextView loginToRegiter;
+    private EditText txtLoginWithEmail;
+    private EditText txtLoginWithPwd;
 
     private SignInButton googleSignIn;
-    private TextView loginToRegiter;
     private Button memberSignIn;
     private Button secretCodeSignIn;
+
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth firebaseAuth;
-    private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        txtLoginWithEmail = findViewById(R.id.loginWithEmail);
+        txtLoginWithPwd = findViewById(R.id.loginEnterPassword);
 
         googleSignIn = findViewById(R.id.googleSignInButton);
         memberSignIn = findViewById(R.id.btnSignInMember);
@@ -67,23 +74,13 @@ public class Login extends Activity {
             startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
         }
 
-        //When google sign in button is clicked
-        googleSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent googlesign = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(googlesign, RC_SIGN_IN);
-            }
-        });
+        //go to the main activity
+        OpenMainActivity();
 
         //go to the register activity
-        loginToRegiter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Register.class));
-                finish();
-            }
-        });
+        OpenRegisterActivity();
+
+        //validate the user input and if the infomations are correct we let them go to the main activity.
     }
 
     @Override
@@ -116,8 +113,29 @@ public class Login extends Activity {
                 });
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
+                Log.w("tag", "Google sign in failed", e);
             }
         }
+    }
+
+    public void OpenRegisterActivity(){
+        loginToRegiter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Register.class));
+                finish();
+            }
+        });
+    }
+
+    public void OpenMainActivity(){
+        //When google sign in button is clicked
+        googleSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent googlesign = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(googlesign, RC_SIGN_IN);
+            }
+        });
     }
 }

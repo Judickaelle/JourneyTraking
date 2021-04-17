@@ -100,6 +100,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
     }
 
+    //method to logout from the application and return to the login page
     private void logout(){
         FirebaseAuth.getInstance().signOut();
         GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build())

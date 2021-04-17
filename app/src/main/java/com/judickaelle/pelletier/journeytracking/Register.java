@@ -94,6 +94,10 @@ public class Register extends AppCompatActivity {
         });
 
         //go to the login activity
+        OpenLoginactivity();
+    }
+
+    public void OpenLoginactivity(){
         registerToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
