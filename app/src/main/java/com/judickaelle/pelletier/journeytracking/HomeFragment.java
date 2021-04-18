@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,9 +20,7 @@ import com.google.firebase.firestore.Query;
 
 public class HomeFragment extends Fragment {
 
-    private FirebaseFirestore db;
     private CollectionReference journeybookRef;
-    private RecyclerView homeRecyclerView;
     private View view;
 
     private JourneyItemAdapter adapter;
@@ -32,7 +31,7 @@ public class HomeFragment extends Fragment {
         //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        db  = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         journeybookRef = db.collection("JourneyBook");
 
 
@@ -42,6 +41,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setUpJourneyRecyclerView(){
+
         Query query = journeybookRef.orderBy("title", Query.Direction.ASCENDING);
 
         //how we get our query to the adapter
@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
 
         adapter = new JourneyItemAdapter(options);
 
-        homeRecyclerView = view.findViewById(R.id.home_recycler_view);
+        RecyclerView homeRecyclerView = view.findViewById(R.id.home_recycler_view);
         homeRecyclerView.setHasFixedSize(true);
         homeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         homeRecyclerView.setAdapter(adapter);

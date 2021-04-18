@@ -24,13 +24,13 @@ import static com.judickaelle.pelletier.journeytracking.R.*;
 
 public class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView nav_header_subtitle;
     private ImageView nav_header_imageProfil;
     private DrawerLayout drawer;
     private View header;
 
     private FirebaseAuth firebaseAuth;
 
+    public TextView nav_header_subtitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
