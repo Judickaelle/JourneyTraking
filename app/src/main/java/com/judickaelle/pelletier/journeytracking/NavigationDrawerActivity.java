@@ -2,7 +2,6 @@ package com.judickaelle.pelletier.journeytracking;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,7 +28,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     private ImageView nav_header_imageProfil;
     private DrawerLayout drawer;
     private View header;
+
     private FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         //extract information from user
         firebaseAuth = FirebaseAuth.getInstance();
         nav_header_subtitle.setText(firebaseAuth.getCurrentUser().getEmail());
-
     }
 
     //the method that enable to pass fom one fragment to anonther one
