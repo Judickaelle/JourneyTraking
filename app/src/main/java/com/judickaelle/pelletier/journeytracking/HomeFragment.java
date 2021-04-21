@@ -65,7 +65,9 @@ public class HomeFragment extends Fragment{
     }
 
     private void setUpJourneyRecyclerView(){
-        Query query = journeybookRef.orderBy("title", Query.Direction.ASCENDING);
+        Query query = journeybookRef
+                .orderBy("title", Query.Direction.ASCENDING)
+                .whereEqualTo("owner", ownerEmail);
 
         //how we get our query to the adapter
         FirestoreRecyclerOptions<JourneyItem> options = new FirestoreRecyclerOptions.Builder<JourneyItem>()
