@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class NewJourneyItemActivity extends AppCompatActivity {
     private EditText txtJourneyTitle, txtJourneySecretKey;
     private TextView txtJourneyOwner;
+    private String ownerEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class NewJourneyItemActivity extends AppCompatActivity {
         txtJourneyTitle = findViewById(R.id.newJourneyItem_title);
         txtJourneyOwner = findViewById(R.id.newJourneyItem_owner);
 
+        ownerEmail = getIntent().getExtras().getString("ownerEmail");
+        txtJourneyOwner.setText(ownerEmail);
 
     }
 

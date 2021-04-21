@@ -24,9 +24,9 @@ import static com.judickaelle.pelletier.journeytracking.R.*;
 
 public class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ImageView nav_header_imageProfil;
     private DrawerLayout drawer;
     private View header;
+    private Bundle emailBundle = new Bundle();
 
     private FirebaseAuth firebaseAuth;
 
@@ -46,7 +46,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         navigationView.setNavigationItemSelectedListener(this);
         header = navigationView.getHeaderView(0);
         nav_header_subtitle = header.findViewById(id.nav_header_subtitle);
-        nav_header_imageProfil = header.findViewById(id.nav_header_imageProfil);
 
         //to have a toogle that enable on a much easier way the navigationView's opening
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -64,15 +63,18 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         //extract information from user
         firebaseAuth = FirebaseAuth.getInstance();
         nav_header_subtitle.setText(firebaseAuth.getCurrentUser().getEmail());
+        //emailBundle.putString("ownerEmail", firebaseAuth.getCurrentUser().getEmail());
+
     }
 
-    //the method that enable to pass fom one fragment to anonther one
+    //the method that enable to pass fom one fragment to another one
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_home:
-                getSupportFragmentManager().beginTransaction().replace(id.fragment_container,
-                        new HomeFragment()).commit();
+                //HomeFragment homeFragment = new HomeFragment();
+                //homeFragment.setArguments(emailBundle);
+                getSupportFragmentManager().beginTransaction().replace(id.fragment_container, new HomeFragment()).commit();
                 break;
             case R.id.nav_sign_out:
                 logout();

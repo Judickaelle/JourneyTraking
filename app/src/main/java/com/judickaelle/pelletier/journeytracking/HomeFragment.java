@@ -2,6 +2,7 @@ package com.judickaelle.pelletier.journeytracking;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -17,15 +18,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.Objects;
+
 public class HomeFragment extends Fragment{
 
     private CollectionReference journeybookRef;
     private View view;
+    private String ownerEmail;
 
     private JourneyItemAdapter adapter;
 
@@ -39,11 +44,18 @@ public class HomeFragment extends Fragment{
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         journeybookRef = db.collection("JourneyBook");
 
+        try {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            ownerEmail = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
+            Log.d("tag", "ownerEmail recuperer : " + ownerEmail);
+        }catch (Exception ignored){}
+
+        //start th activity to create a new JourneyItem
         FloatingActionButton buttonAddJourney = view.findViewById(R.id.btn_home_add_journey);
         buttonAddJourney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), NewJourneyItemActivity.class));
+                startActivity(new Intent(getContext(), NewJourneyItemActivity.class).putExtra("ownerEmail", ownerEmail));
             }
         });
 
@@ -53,7 +65,6 @@ public class HomeFragment extends Fragment{
     }
 
     private void setUpJourneyRecyclerView(){
-
         Query query = journeybookRef.orderBy("title", Query.Direction.ASCENDING);
 
         //how we get our query to the adapter
@@ -81,6 +92,7 @@ public class HomeFragment extends Fragment{
             }
         }).attachToRecyclerView(homeRecyclerView);
 
+        //get some result when a card is clicked
         adapter.setOnItemClickListener(new JourneyItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
