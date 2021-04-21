@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,15 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     private CollectionReference journeybookRef;
     private View view;
 
     private JourneyItemAdapter adapter;
+
 
     @Nullable
     @Override
@@ -77,6 +80,16 @@ public class HomeFragment extends Fragment {
                 adapter.deleteItem(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(homeRecyclerView);
+
+        adapter.setOnItemClickListener(new JourneyItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                JourneyItem journeyItem = documentSnapshot.toObject(JourneyItem.class);
+                String id = documentSnapshot.getId();
+                documentSnapshot.getReference();
+                Toast.makeText(getContext(), "Position: "+ position + " ID: " + id, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

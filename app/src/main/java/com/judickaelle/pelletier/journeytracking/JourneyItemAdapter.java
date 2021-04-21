@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class JourneyItemAdapter extends FirestoreRecyclerAdapter<JourneyItem, JourneyItemAdapter.JourneyItemHolder>{
+
+    private OnItemClickListener listener;
 
     public JourneyItemAdapter(@NonNull FirestoreRecyclerOptions<JourneyItem> options) {
         super(options);
@@ -34,6 +37,7 @@ public class JourneyItemAdapter extends FirestoreRecyclerAdapter<JourneyItem, Jo
         getSnapshots().getSnapshot(position).getReference().delete();
     }
 
+
     class JourneyItemHolder extends RecyclerView.ViewHolder{
         TextView textViewTitle;
         TextView textViewSecretKey;
@@ -43,6 +47,30 @@ public class JourneyItemAdapter extends FirestoreRecyclerAdapter<JourneyItem, Jo
             textViewTitle = itemView.findViewById(R.id.journey_item_title);
             textViewSecretKey = itemView.findViewById(R.id.journey_item_reference);
 
+            //catch a click wherever on a journey item card
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    //get a document snapshot at the position and send the data to another activity
+                    //if we want to pass a context to our adapter we could call a startActivity
+                    //better approach to send the click to the loan activity to send the click from
+                    //the adapter to an activity we need an interface
+                    if(position != RecyclerView.NO_POSITION && listener != null){
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position);
+                    }
+                }
+            });
+
         }
+    }
+    //with this listener and this method, we can sent data from the adapter to the underland activity
+    //that implements the interface below
+    public interface OnItemClickListener{
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 }
