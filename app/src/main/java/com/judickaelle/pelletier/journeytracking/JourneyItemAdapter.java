@@ -30,6 +30,10 @@ public class JourneyItemAdapter extends FirestoreRecyclerAdapter<JourneyItem, Jo
         return new JourneyItemHolder(v);
     }
 
+    public void deleteItem(int position){
+        getSnapshots().getSnapshot(position).getReference().delete();
+    }
+
     class JourneyItemHolder extends RecyclerView.ViewHolder{
         TextView textViewTitle;
         TextView textViewSecretKey;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".NewJourneyItemActivity">
+
+    <EditText
+    android:id="@+id/newJourneyItem_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/journey_title"
+    android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/newJourneyItem_secretKey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_a_unique_secret_key_for_this_journey"
+        android:inputType="text"/>
+
+    <TextView
+        android:id="@+id/newJourneyItem_owner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="owner"/>
+
+
+</LinearLayout>

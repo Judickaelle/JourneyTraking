@@ -33,6 +33,10 @@
     <string name="error">Error : </string>
     <string name="authentication">Authentication successful </string>
     <string name="signout_failed">Sign out failed</string>
-    <string name="addjourney">addJourney</string>
     <string name="secret_key">Secret Key</string>
+    <string name="journey_title">Journey title</string>
+    <string name="enter_a_unique_secret_key_for_this_journey">enter a unique secret key for this journey</string>
+    <string name="error_newJourneyItem_titleOrSecretKeyEmpty">Please insert a title and a secret key</string>
+    <string name="message_journey_added">Journey added</string>
+    <string name="add_journey">Add Journey</string>
 </resources>
