@@ -1,5 +1,7 @@
 package com.judickaelle.pelletier.journeytracking;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,12 +52,13 @@ public class HomeFragment extends Fragment{
             Log.d("tag", "ownerEmail recuperer : " + ownerEmail);
         }catch (Exception ignored){}
 
-        //start th activity to create a new JourneyItem
+        //start the activity to create a new JourneyItem
         FloatingActionButton buttonAddJourney = view.findViewById(R.id.btn_home_add_journey);
         buttonAddJourney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), NewJourneyItemActivity.class).putExtra("ownerEmail", ownerEmail));
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -66,8 +69,8 @@ public class HomeFragment extends Fragment{
 
     private void setUpJourneyRecyclerView(){
         Query query = journeybookRef
-                .orderBy("title", Query.Direction.ASCENDING)
-                .whereEqualTo("owner", ownerEmail);
+                .whereEqualTo("owner", ownerEmail)
+                .orderBy("title", Query.Direction.ASCENDING);
 
         //how we get our query to the adapter
         FirestoreRecyclerOptions<JourneyItem> options = new FirestoreRecyclerOptions.Builder<JourneyItem>()
@@ -90,7 +93,25 @@ public class HomeFragment extends Fragment{
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.deleteItem(viewHolder.getAdapterPosition());
+                //show an alert dialog to confirm the suppression
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setTitle(R.string.suppression_item_title);
+                builder.setMessage(R.string.suppression_item_message);
+                builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.deleteItem(viewHolder.getAdapterPosition());
+                        adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    }
+                });
+                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         }).attachToRecyclerView(homeRecyclerView);
 

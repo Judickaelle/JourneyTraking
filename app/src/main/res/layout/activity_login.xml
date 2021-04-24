@@ -65,7 +65,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25sp"
+            android:backgroundTint="@color/egg_shell"
             android:text="@string/signInGuest"
+            android:textColor="@color/blue_map_monde"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginSecretCode" />
@@ -129,7 +131,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25sp"
+            android:backgroundTint="@color/egg_shell"
             android:text="@string/Login"
+            android:textColor="@color/blue_map_monde"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/loginEnterPassword"
             app:layout_constraintTop_toBottomOf="@+id/loginEnterPassword" />

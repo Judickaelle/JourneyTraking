@@ -39,4 +39,11 @@
     <string name="error_newJourneyItem_titleOrSecretKeyEmpty">Please insert a title and a secret key</string>
     <string name="message_journey_added">Journey added</string>
     <string name="add_journey">Add Journey</string>
+    <string name="title">Title</string>
+    <string name="access_key">Access key</string>
+    <string name="owner">owner</string>
+    <string name="suppression_item_title">Suppression of the item</string>
+    <string name="suppression_item_message">Do you want to continue the suppression of this item ?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 </resources>

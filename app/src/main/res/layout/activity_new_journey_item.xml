@@ -7,25 +7,59 @@
     android:padding="16dp"
     tools:context=".NewJourneyItemActivity">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/title"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+        android:textColor="@color/egg_shell" />
+
     <EditText
-    android:id="@+id/newJourneyItem_title"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="@string/journey_title"
-    android:inputType="text"/>
+        android:id="@+id/newJourneyItem_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="@string/journey_title"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/access_key"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+        android:textColor="@color/egg_shell" />
 
     <EditText
         android:id="@+id/newJourneyItem_secretKey"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:hint="@string/enter_a_unique_secret_key_for_this_journey"
         android:inputType="text"/>
 
     <TextView
-        android:id="@+id/newJourneyItem_owner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="owner"/>
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/owner"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+        android:textColor="@color/egg_shell" />
+
+    <TextView
+        android:id="@+id/newJourneyItem_owner"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/owner"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:textAppearance="@style/FirebaseUI.TextInputEditText"/>
 
 
 </LinearLayout>
