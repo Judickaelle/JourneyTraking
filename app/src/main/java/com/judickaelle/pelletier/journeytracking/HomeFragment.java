@@ -3,6 +3,7 @@ package com.judickaelle.pelletier.journeytracking;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,9 +15,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,6 +37,9 @@ public class HomeFragment extends Fragment{
     private CollectionReference journeybookRef;
     private View view;
     private String ownerEmail;
+    private RecyclerView homeRecyclerView;
+
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private JourneyItemAdapter adapter;
 
@@ -46,6 +53,17 @@ public class HomeFragment extends Fragment{
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         journeybookRef = db.collection("JourneyBook");
 
+        //swipe to refresh the view
+        swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh_homeRecycleView);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         try {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             ownerEmail = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
@@ -58,7 +76,6 @@ public class HomeFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), NewJourneyItemActivity.class).putExtra("ownerEmail", ownerEmail));
-                adapter.notifyDataSetChanged();
             }
         });
 
@@ -66,6 +83,15 @@ public class HomeFragment extends Fragment{
         setUpJourneyRecyclerView();
         return view;
     }
+
+    private void refresh(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
+    }
+
 
     private void setUpJourneyRecyclerView(){
         Query query = journeybookRef
@@ -79,7 +105,7 @@ public class HomeFragment extends Fragment{
 
         adapter = new JourneyItemAdapter(options);
 
-        RecyclerView homeRecyclerView = view.findViewById(R.id.home_recycler_view);
+        homeRecyclerView = view.findViewById(R.id.home_recycler_view);
         homeRecyclerView.setHasFixedSize(true);
         homeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         homeRecyclerView.setAdapter(adapter);
@@ -102,7 +128,7 @@ public class HomeFragment extends Fragment{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         adapter.deleteItem(viewHolder.getAdapterPosition());
-                        adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                        refresh();
                     }
                 });
                 builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -115,7 +141,7 @@ public class HomeFragment extends Fragment{
             }
         }).attachToRecyclerView(homeRecyclerView);
 
-        //get some result when a card is clicked
+        //This section handles what happens when you click on an item in the recyclerView list
         adapter.setOnItemClickListener(new JourneyItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
@@ -138,4 +164,6 @@ public class HomeFragment extends Fragment{
         super.onStop();
         adapter.startListening();
     }
+
+
 }

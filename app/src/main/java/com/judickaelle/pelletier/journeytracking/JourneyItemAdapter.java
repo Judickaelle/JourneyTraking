@@ -1,5 +1,6 @@
 package com.judickaelle.pelletier.journeytracking;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 public class JourneyItemAdapter extends FirestoreRecyclerAdapter<JourneyItem, JourneyItemAdapter.JourneyItemHolder>{
@@ -34,7 +37,19 @@ public class JourneyItemAdapter extends FirestoreRecyclerAdapter<JourneyItem, Jo
     }
 
     public void deleteItem(int position){
-        getSnapshots().getSnapshot(position).getReference().delete();
+        getSnapshots().getSnapshot(position).getReference().delete()
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("tag", "DocumentSnapshot successfully deleted!");
+                }
+            })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("tag", "Error deleting document", e);
+                    }
+                });
     }
 
 

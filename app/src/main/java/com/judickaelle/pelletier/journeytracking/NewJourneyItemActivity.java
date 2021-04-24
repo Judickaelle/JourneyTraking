@@ -3,6 +3,7 @@ package com.judickaelle.pelletier.journeytracking;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class NewJourneyItemActivity extends AppCompatActivity {
     private TextView txtJourneyOwner;
     private String ownerEmail;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,7 @@ public class NewJourneyItemActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
         setTitle(getString(R.string.add_journey));
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getString(R.color.colorPrimary))));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.colorPrimary))));
 
         txtJourneySecretKey = findViewById(R.id.newJourneyItem_secretKey);
         txtJourneyTitle = findViewById(R.id.newJourneyItem_title);
