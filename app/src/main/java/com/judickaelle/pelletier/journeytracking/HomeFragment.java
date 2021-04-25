@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment{
 
         //start the activity to create a new JourneyItem
         FloatingActionButton buttonAddJourney = view.findViewById(R.id.btn_home_add_journey);
+        buttonAddJourney.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         buttonAddJourney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

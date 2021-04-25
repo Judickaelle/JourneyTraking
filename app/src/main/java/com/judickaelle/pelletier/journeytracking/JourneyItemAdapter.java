@@ -26,7 +26,7 @@ public class JourneyItemAdapter extends FirestoreRecyclerAdapter<JourneyItem, Jo
     @Override
     protected void onBindViewHolder(@NonNull JourneyItemHolder holder, int position, @NonNull JourneyItem model) {
         holder.textViewTitle.setText(model.getTitle());
-        holder.textViewSecretKey.setText(model.getSecretKey());
+        holder.textViewSecretKey.setText(getSnapshots().getSnapshot(position).getReference().getId());
     }
 
     @NonNull
