@@ -1,11 +1,13 @@
 package com.judickaelle.pelletier.journeytracking;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -40,6 +43,14 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         idJourney = getIntent().getExtras().getString("journeyId");
         textViewJourneyOwner.setText(getIntent().getExtras().getString("journeyOwner"));
         textViewJourneyTitle.setText(getIntent().getExtras().getString("journeyTitle"));
+
+        FloatingActionButton buttonAddStep = findViewById(R.id.btn_JourneyItem_add_step);
+        buttonAddStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), NewStepActivity.class).putExtra("idJourney", idJourney));
+            }
+        });
 
         setUpRecyclerView();
 

@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JourneyTracking">
-        <activity android:name=".Login"
+        <activity
+            android:name=".Login"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,17 +26,21 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
-        <activity android:name=".NavigationDrawerActivity"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".NavigationDrawerActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".MapsActivity" />
         <activity
             android:name=".NewJourneyItemActivity"
             android:parentActivityName=".NavigationDrawerActivity"
-            android:theme="@style/Theme.JourneyTracking.WithActionBar"/>
-        <activity android:name=".AddStepJourneyActivity"
+            android:theme="@style/Theme.JourneyTracking.WithActionBar" />
+        <activity
+            android:name=".AddStepJourneyActivity"
             android:parentActivityName=".NavigationDrawerActivity"
+            android:theme="@style/Theme.JourneyTracking.WithActionBar" />
+        <activity android:name=".NewStepActivity"
+            android:parentActivityName=".AddStepJourneyActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar"/>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

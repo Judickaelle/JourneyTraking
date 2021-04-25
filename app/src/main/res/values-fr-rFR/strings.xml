@@ -43,4 +43,10 @@
     <string name="suppression_item_message">Do you want to continue the suppression of this item ?</string>
     <string name="confirm">Confirm</string>
     <string name="step_title">step title</string>
+    <string name="enter_the_step_title">Enter the step title</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="step_number">Step number</string>
+    <string name="error_creation_new_step">Please complete all fields</string>
+    <string name="step_added">Step added to the Journey</string>
 </resources>
