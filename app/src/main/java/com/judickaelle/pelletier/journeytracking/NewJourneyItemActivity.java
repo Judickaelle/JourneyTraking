@@ -18,7 +18,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class NewJourneyItemActivity extends AppCompatActivity {
-    private EditText txtJourneyTitle, txtJourneySecretKey;
+    private EditText txtJourneyTitle;
     private TextView txtJourneyOwner;
     private String ownerEmail;
 
@@ -32,7 +32,6 @@ public class NewJourneyItemActivity extends AppCompatActivity {
         setTitle(getString(R.string.add_journey));
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.colorPrimary))));
 
-        txtJourneySecretKey = findViewById(R.id.newJourneyItem_secretKey);
         txtJourneyTitle = findViewById(R.id.newJourneyItem_title);
         txtJourneyOwner = findViewById(R.id.newJourneyItem_owner);
 
@@ -62,17 +61,16 @@ public class NewJourneyItemActivity extends AppCompatActivity {
 
     private void saveJourney() {
         String title = txtJourneyTitle.getText().toString();
-        String secretKey = txtJourneySecretKey.getText().toString();
         String owner = txtJourneyOwner.getText().toString();
 
-        if(title.trim().isEmpty()||secretKey.trim().isEmpty()){
+        if(title.trim().isEmpty()){
             Toast.makeText(this, R.string.error_newJourneyItem_titleOrSecretKeyEmpty, Toast.LENGTH_SHORT).show();
             return;
         }
 
         CollectionReference journeybookRef = FirebaseFirestore.getInstance()
                 .collection(("JourneyBook"));
-        journeybookRef.add(new JourneyItem(title, secretKey, owner));
+        journeybookRef.add(new JourneyItem(title, owner));
         Toast.makeText(this, R.string.message_journey_added, Toast.LENGTH_SHORT).show();
         finish();
     }

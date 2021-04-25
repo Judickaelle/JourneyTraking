@@ -13,6 +13,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorAccentdarker">#BF3060</color>
     <color name="light_pink">#FFd1a595</color>
 
     <color name="violet">#9400D3</color>
@@ -22,6 +23,10 @@
     <color name="yellow">#FFFF00</color>
     <color name="orange">#FF7F00</color>
     <color name="red">#FF0000</color>
+
+    <color name="darker_grey">#61505E</color>
+    <color name="grey">#A1859D</color>
+    <color name="light_grey">#EDC5E7</color>
 
     <color name="blue_map_monde">#171F2A</color>
 
