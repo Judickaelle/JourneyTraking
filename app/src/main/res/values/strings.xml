@@ -46,4 +46,5 @@
     <string name="suppression_item_message">Do you want to continue the suppression of this item ?</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="step_title">step title</string>
 </resources>
