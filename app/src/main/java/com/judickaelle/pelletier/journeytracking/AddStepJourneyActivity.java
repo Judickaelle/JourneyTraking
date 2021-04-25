@@ -37,6 +37,10 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_step_journey_item);
 
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.colorPrimary))));
+
+
         textViewJourneyTitle = findViewById(R.id.JourneyItem_title);
         textViewJourneyOwner = findViewById(R.id.JourneyItem_owner);
 
@@ -57,7 +61,9 @@ public class AddStepJourneyActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerView() {
-        Query query = stepbookRef.orderBy("stepNumber" , Query.Direction.ASCENDING);
+        Query query = stepbookRef
+                .whereEqualTo("id_journey", idJourney)
+                .orderBy("stepNumber" , Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<Step> options = new FirestoreRecyclerOptions.Builder<Step>()
                 .setQuery(query, Step.class)

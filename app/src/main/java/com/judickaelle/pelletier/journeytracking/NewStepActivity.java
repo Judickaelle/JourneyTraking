@@ -3,6 +3,9 @@ package com.judickaelle.pelletier.journeytracking;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,10 +25,15 @@ public class NewStepActivity extends AppCompatActivity {
     private Button getGPSposition;
     private String idJourney;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_step);
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
+        setTitle(getString(R.string.add_new_step_title));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.colorPrimary))));
 
         newStepTitle = findViewById(R.id.newStepItem_title);
         newStepLatitude = findViewById(R.id.newStepItem_latitude);

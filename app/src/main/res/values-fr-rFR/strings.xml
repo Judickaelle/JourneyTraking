@@ -49,4 +49,5 @@
     <string name="step_number">Step number</string>
     <string name="error_creation_new_step">Please complete all fields</string>
     <string name="step_added">Step added to the Journey</string>
+    <string name="add_new_step_title">Add a new step</string>
 </resources>

@@ -36,6 +36,7 @@
             android:theme="@style/Theme.JourneyTracking.WithActionBar" />
         <activity
             android:name=".AddStepJourneyActivity"
+            android:launchMode="singleTop"
             android:parentActivityName=".NavigationDrawerActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar" />
         <activity android:name=".NewStepActivity"
