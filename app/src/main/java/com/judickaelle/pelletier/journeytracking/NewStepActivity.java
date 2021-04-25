@@ -2,10 +2,15 @@ package com.judickaelle.pelletier.journeytracking;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,14 +21,22 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Locale;
+
 public class NewStepActivity extends AppCompatActivity {
+    //initialize variable
     private EditText newStepTitle, newStepLatitude, newStepLongitude;
     private NumberPicker newStepNumber;
-    private Button getGPSposition;
+    private Button getGPSlocation;
     private String idJourney;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     @SuppressLint("ResourceType")
     @Override
@@ -31,28 +44,55 @@ public class NewStepActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_step);
 
+        //define action bar of this activity
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
         setTitle(getString(R.string.add_new_step_title));
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.colorPrimary))));
 
+        //assign variable
         newStepTitle = findViewById(R.id.newStepItem_title);
         newStepLatitude = findViewById(R.id.newStepItem_latitude);
         newStepLongitude = findViewById(R.id.newStepItem_longitude);
         newStepNumber = findViewById(R.id.newStepItem_number);
-        getGPSposition = findViewById(R.id.btn_getGPSposition);
+        getGPSlocation = findViewById(R.id.btn_getGPSposition);
 
         idJourney = getIntent().getExtras().getString("idJourney");
 
-        //it is possible to create only 11 steps for one journey
-        newStepNumber.setMinValue(1);
-        newStepNumber.setMaxValue(11);
+        //initialize fusedLocationProviderClient
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        getGPSposition.setOnClickListener(new View.OnClickListener() {
+        //it is possible to create only 8 steps for one journey with the free google API
+        newStepNumber.setMinValue(1);
+        newStepNumber.setMaxValue(8);
+
+        //method to get the user location
+        getGPSlocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO implement to obtain the gsp coodonate
-                newStepLatitude.setText("latitude obtenue");
-                newStepLongitude.setText("longitude obtenue");
+                //Check permission
+                if (ActivityCompat.checkSelfPermission(NewStepActivity.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    //when permission granded
+                    getLocation();
+                } else {
+                    ActivityCompat.requestPermissions(NewStepActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                }
+            }
+        });
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getLocation() {
+        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                //initialize location
+                Location location = task.getResult();
+                if (location != null){
+                    //initialize variable with the location
+                    newStepLatitude.setText(String.valueOf(location.getLatitude()));
+                    newStepLongitude.setText(String.valueOf(location.getLongitude()));
+                }
             }
         });
     }

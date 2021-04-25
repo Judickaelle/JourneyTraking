@@ -81,8 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Get my gps position"
-        android:layout_gravity="center"/>
+        android:text="@string/get_location"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/colorAccent"/>
 
     <TextView
         android:layout_width="match_parent"
