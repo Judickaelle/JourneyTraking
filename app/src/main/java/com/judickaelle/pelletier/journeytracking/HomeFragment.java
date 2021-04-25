@@ -148,7 +148,12 @@ public class HomeFragment extends Fragment{
                 JourneyItem journeyItem = documentSnapshot.toObject(JourneyItem.class);
                 String id = documentSnapshot.getId();
                 documentSnapshot.getReference();
-                Toast.makeText(getContext(), "Position: "+ position + " ID: " + id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "title: "+ journeyItem.getTitle() + " owner : " + journeyItem.getOwner() + " ID: " + id, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getContext(), AddStepJourneyActivity.class);
+                i.putExtra("journeyId", id);
+                i.putExtra("journeyTitle", journeyItem.getTitle());
+                i.putExtra("journeyOwner", journeyItem.getOwner());
+                startActivity(i);
             }
         });
     }
@@ -162,7 +167,7 @@ public class HomeFragment extends Fragment{
     @Override
     public void onStop() {
         super.onStop();
-        adapter.startListening();
+        adapter.stopListening();
     }
 
 

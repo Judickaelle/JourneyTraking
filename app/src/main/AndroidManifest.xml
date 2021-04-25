@@ -32,6 +32,9 @@
             android:name=".NewJourneyItemActivity"
             android:parentActivityName=".NavigationDrawerActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar"/>
+        <activity android:name=".AddStepJourneyActivity"
+            android:parentActivityName=".NavigationDrawerActivity"
+            android:theme="@style/Theme.JourneyTracking.WithActionBar"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

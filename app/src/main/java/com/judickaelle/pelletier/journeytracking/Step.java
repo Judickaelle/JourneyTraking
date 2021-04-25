@@ -5,16 +5,18 @@ public class Step {
     private String id_journey;
     private String latitude;
     private String longitude;
+    private int stepNumber;
 
     public Step(){
         //empty construtor needed
     }
 
-    public Step(String title, String id_journey, String latitude, String longitude){
-        this.stepTitle = title;
+    public Step(String stepTitle, String id_journey, String latitude, String longitude, int stepNumber){
+        this.stepTitle = stepTitle;
         this.id_journey = id_journey;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.stepNumber = stepNumber;
     }
 
     public String getStepTitle() {
@@ -32,4 +34,6 @@ public class Step {
     public String getLongitude() {
         return longitude;
     }
+
+    public int getStepNumber() { return stepNumber; }
 }
