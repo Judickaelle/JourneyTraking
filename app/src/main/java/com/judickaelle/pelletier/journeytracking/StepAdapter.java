@@ -33,6 +33,10 @@ public class StepAdapter extends FirestoreRecyclerAdapter<Step, StepAdapter.Step
         return new StepHolder(v);
     }
 
+    public void deleteItem(int position){
+        getSnapshots().getSnapshot(position).getReference().delete();
+    }
+
     class  StepHolder extends RecyclerView.ViewHolder{
         TextView textViewStepTitle;
         TextView textViewStepLatitude;

@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -33,7 +34,7 @@ import java.util.Locale;
 public class NewStepActivity extends AppCompatActivity {
     //initialize variable
     private EditText newStepTitle, newStepLatitude, newStepLongitude;
-    private NumberPicker newStepNumber;
+    private TextView newStepNumber;
     private Button getGPSlocation;
     private String idJourney;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -61,9 +62,7 @@ public class NewStepActivity extends AppCompatActivity {
         //initialize fusedLocationProviderClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        //it is possible to create only 8 steps for one journey with the free google API
-        newStepNumber.setMinValue(1);
-        newStepNumber.setMaxValue(8);
+        //it is possible to create only 8 waypoints for one journey with the free google API
 
         //method to get the user location
         getGPSlocation.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +119,7 @@ public class NewStepActivity extends AppCompatActivity {
         String latitude = newStepLatitude.getText().toString();
         String longitude = newStepLongitude.getText().toString();
         String id_journey = idJourney;
-        int stepNumber = newStepNumber.getValue();
+        int stepNumber = Integer.parseInt(newStepNumber.getText().toString());
 
         if(stepTitle.trim().isEmpty()||latitude.trim().isEmpty() || longitude.trim().isEmpty()){
             Toast.makeText(this, R.string.error_creation_new_step, Toast.LENGTH_SHORT).show();
