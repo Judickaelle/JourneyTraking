@@ -1,6 +1,9 @@
 package com.judickaelle.pelletier.journeytracking;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +12,7 @@ import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +60,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         });
 
         setUpRecyclerView();
+        copyToClipboard();
 
     }
 
@@ -74,6 +79,24 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(stepAdapter);
+    }
+
+    private void copyToClipboard(){
+        textViewJourneyAccesKey.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //initialize variable
+                ClipData myClip;
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                //copy the text inside the textViewJourneyId
+                myClip = ClipData.newPlainText("journeyAccessKey", textViewJourneyAccesKey
+                        .getText().toString());
+                clipboard.setPrimaryClip(myClip);
+                //return a Toast message
+                Toast.makeText(getApplicationContext(), R.string.access_key_copy, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
     }
 
     @Override

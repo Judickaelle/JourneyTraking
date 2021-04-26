@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimaryDark"
-        android:text="@string/title"
+        android:text="@string/journey_title"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
         android:textColor="@color/egg_shell" />

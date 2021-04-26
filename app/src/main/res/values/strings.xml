@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Journey Tracking</string>
+    <string name="app_name" translatable="false">Journey Tracking</string>
     <string name="title_activity_maps">Journey Tracking</string>
     <string name="Register">Sign up</string>
     <string name="create_new_account">Create new account</string>
@@ -33,20 +33,17 @@
     <string name="error">Error : </string>
     <string name="authentication">Authentication successful </string>
     <string name="signout_failed">Sign out failed</string>
-    <string name="secret_key">Secret Key</string>
     <string name="journey_title">Journey title</string>
-    <string name="enter_a_unique_secret_key_for_this_journey">enter a unique secret key for this journey</string>
-    <string name="error_newJourneyItem_titleOrSecretKeyEmpty">Please insert a title and a secret key</string>
+    <string name="error_newJourneyItem_titleOrSecretKeyEmpty">Please insert a title</string>
     <string name="message_journey_added">Journey added</string>
     <string name="add_journey">Add Journey</string>
-    <string name="title">Title</string>
     <string name="access_key">Access key</string>
-    <string name="owner">owner</string>
+    <string name="owner">Owner</string>
     <string name="suppression_item_title">Suppression of the item</string>
     <string name="suppression_item_message">Do you want to continue the suppression of this item ?</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
-    <string name="step_title">step title</string>
+    <string name="step_title">Step title</string>
     <string name="enter_the_step_title">Enter the step title</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
@@ -55,4 +52,5 @@
     <string name="step_added">Step added to the Journey</string>
     <string name="add_new_step_title">Add a new step</string>
     <string name="get_location">Get location</string>
+    <string name="access_key_copy">Access key copy to clipboard</string>
 </resources>
