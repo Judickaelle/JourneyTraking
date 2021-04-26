@@ -23,18 +23,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
 public class HomeFragment extends Fragment{
 
-    private CollectionReference journeybookRef;
+    private CollectionReference journeybookRef, stepbookRef;
     private View view;
     private String ownerEmail;
     private RecyclerView homeRecyclerView;
@@ -52,6 +56,7 @@ public class HomeFragment extends Fragment{
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         journeybookRef = db.collection("JourneyBook");
+        stepbookRef = db.collection("StepBook");
 
         //swipe to refresh the view
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh_homeRecycleView);
@@ -127,14 +132,36 @@ public class HomeFragment extends Fragment{
                 builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //TODO delete all step link to the journey
-                        adapter.deleteItem(viewHolder.getAdapterPosition());
-                        refresh();
+                        //get the documentId that user wants to delete
+                        DocumentSnapshot documentSnapshot = adapter.getSnapshots().getSnapshot(viewHolder.getAdapterPosition());
+                        String idDoc = documentSnapshot.getId();
+                        //delete all step link to the journey
+                        //first get the document step link to the particular journey
+                        Query query1 = stepbookRef.whereEqualTo("id_journey", idDoc);
+                        query1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                int countDoc =0;
+                                if(task.isSuccessful()){
+                                    for(DocumentSnapshot document : task.getResult()){
+                                        countDoc++;
+                                        document.getReference().delete();
+                                    }
+                                    Log.d("tag", "nombre d'item supprimé : " + countDoc);
+                                    //then we delete the journey document
+                                    adapter.deleteItem(viewHolder.getAdapterPosition());
+                                }else {
+                                    Log.d("tag", "error when trying to suppress the document " +
+                                            "step link to the journey : ", task.getException());
+                                }
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        refresh();
                     }
                 });
                 AlertDialog dialog = builder.create();
@@ -149,7 +176,7 @@ public class HomeFragment extends Fragment{
                 JourneyItem journeyItem = documentSnapshot.toObject(JourneyItem.class);
                 String id = documentSnapshot.getId();
                 documentSnapshot.getReference();
-                Toast.makeText(getContext(), "title: "+ journeyItem.getTitle() + " owner : " + journeyItem.getOwner() + " ID: " + id, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "title: "+ journeyItem.getTitle() + " ID: " + id, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getContext(), AddStepJourneyActivity.class);
                 i.putExtra("journeyId", id);
                 i.putExtra("journeyTitle", journeyItem.getTitle());

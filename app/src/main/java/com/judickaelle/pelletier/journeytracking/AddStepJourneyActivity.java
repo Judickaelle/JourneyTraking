@@ -66,7 +66,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DocumentSnapshot lastDocument = stepAdapter.getSnapshots().getSnapshot(nombreEtape-1);
-                //recupère le numero d'étape du dernier document retourné
+                //get the stepNumber from le last documentSnapshot find
                 Step step = lastDocument.toObject(Step.class);
                 int nvNombreEtape = step.getStepNumber()+1;
                 if(nombreEtape < 10){
