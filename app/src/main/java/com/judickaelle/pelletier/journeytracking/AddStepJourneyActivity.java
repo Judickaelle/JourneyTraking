@@ -44,6 +44,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
     private Query query;
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton buttonAddStep, buttonPreviewJourney;
 
     private StepAdapter stepAdapter;
     private RecyclerView recyclerView;
@@ -73,8 +74,17 @@ public class AddStepJourneyActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton buttonAddStep = findViewById(R.id.btn_JourneyItem_add_step);
+        buttonAddStep = findViewById(R.id.btn_JourneyItem_add_step);
+        buttonPreviewJourney = findViewById(R.id.btn_Journey_preview);
 
+        buttonListener();
+        setUpRecyclerView();
+        copyToClipboard();
+
+    }
+
+    private void buttonListener() {
+        //will lead to the activity to add a new step to the journey
         buttonAddStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,14 +98,19 @@ public class AddStepJourneyActivity extends AppCompatActivity {
                     i.putExtra("stepNumber", String.valueOf(nvNombreEtape));
                     startActivity(i);
                 }else{
-                 Toast.makeText(getApplicationContext(), "you can't add more than 10 step", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "you can't add more than 10 step", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        setUpRecyclerView();
-        copyToClipboard();
-
+        //will lead to the activity to preview the journey with the different point on the map
+        buttonPreviewJourney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void setUpRecyclerView() {
