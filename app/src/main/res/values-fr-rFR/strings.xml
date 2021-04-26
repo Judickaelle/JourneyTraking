@@ -49,4 +49,5 @@
     <string name="error_creation_new_step">Veuillez compléte tous les champs</string>
     <string name="step_added">Etape ajoutée au voyage</string>
     <string name="get_location">Récupérer ma position</string>
+    <string name="title_add_step_journey_activity">Resume of my journey</string>
 </resources>

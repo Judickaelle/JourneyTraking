@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment{
     private String ownerEmail;
     private RecyclerView homeRecyclerView;
 
-    SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private JourneyItemAdapter adapter;
 
@@ -60,7 +60,6 @@ public class HomeFragment extends Fragment{
 
         //swipe to refresh the view
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh_homeRecycleView);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -90,11 +89,8 @@ public class HomeFragment extends Fragment{
     }
 
     private void refresh(){
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        if (Build.VERSION.SDK_INT >= 26) {
-            ft.setReorderingAllowed(false);
-        }
-        ft.detach(this).attach(this).commit();
+        onStop();
+        onStart();
     }
 
 
@@ -141,13 +137,10 @@ public class HomeFragment extends Fragment{
                         query1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                int countDoc =0;
                                 if(task.isSuccessful()){
                                     for(DocumentSnapshot document : task.getResult()){
-                                        countDoc++;
                                         document.getReference().delete();
                                     }
-                                    Log.d("tag", "nombre d'item supprimé : " + countDoc);
                                     //then we delete the journey document
                                     adapter.deleteItem(viewHolder.getAdapterPosition());
                                 }else {
@@ -173,10 +166,11 @@ public class HomeFragment extends Fragment{
         adapter.setOnItemClickListener(new JourneyItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                //creation of an journeyItem to be able to retrieve information from the
+                //different parameters
                 JourneyItem journeyItem = documentSnapshot.toObject(JourneyItem.class);
                 String id = documentSnapshot.getId();
                 documentSnapshot.getReference();
-                //Toast.makeText(getContext(), "title: "+ journeyItem.getTitle() + " ID: " + id, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getContext(), AddStepJourneyActivity.class);
                 i.putExtra("journeyId", id);
                 i.putExtra("journeyTitle", journeyItem.getTitle());
@@ -196,6 +190,4 @@ public class HomeFragment extends Fragment{
         super.onStop();
         adapter.stopListening();
     }
-
-
 }

@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +43,8 @@ public class AddStepJourneyActivity extends AppCompatActivity {
     private CollectionReference stepbookRef = db.collection("StepBook");
     private Query query;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     private StepAdapter stepAdapter;
     private RecyclerView recyclerView;
 
@@ -52,6 +55,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_step_journey_item);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
+        setTitle(getString(R.string.title_add_step_journey_activity));
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.colorPrimary))));
 
         textViewJourneyTitle = findViewById(R.id.JourneyItem_title);
@@ -59,6 +63,15 @@ public class AddStepJourneyActivity extends AppCompatActivity {
 
         textViewJourneyAccesKey.setText(getIntent().getExtras().getString("journeyId"));
         textViewJourneyTitle.setText(getIntent().getExtras().getString("journeyTitle"));
+
+        swipeRefreshLayout = findViewById(R.id.swipeToRefresh_stepRecycleView);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         FloatingActionButton buttonAddStep = findViewById(R.id.btn_JourneyItem_add_step);
 
@@ -125,6 +138,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
                 builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        refresh();
                     }
                 });
                 AlertDialog dialog = builder.create();
@@ -166,6 +180,11 @@ public class AddStepJourneyActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void refresh(){
+        onStop();
+        onStart();
     }
 
     @Override
