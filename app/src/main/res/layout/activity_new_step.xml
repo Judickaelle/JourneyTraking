@@ -96,11 +96,22 @@
         android:textColor="@color/egg_shell"
         tools:ignore="RtlCompat" />
 
-    <NumberPicker
+    <TextView
+        android:id="@+id/newStepItem_number"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/step_number"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:textAppearance="@style/FirebaseUI.TextInputEditText"
+        tools:ignore="RtlCompat" />
+
+
+    <!--NumberPicker
         android:id="@+id/newStepItem_number"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"/-->
 
 </LinearLayout>

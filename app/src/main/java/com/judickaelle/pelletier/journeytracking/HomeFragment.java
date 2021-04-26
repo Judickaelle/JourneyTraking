@@ -152,7 +152,6 @@ public class HomeFragment extends Fragment{
                 Intent i = new Intent(getContext(), AddStepJourneyActivity.class);
                 i.putExtra("journeyId", id);
                 i.putExtra("journeyTitle", journeyItem.getTitle());
-                i.putExtra("journeyOwner", journeyItem.getOwner());
                 startActivity(i);
             }
         });

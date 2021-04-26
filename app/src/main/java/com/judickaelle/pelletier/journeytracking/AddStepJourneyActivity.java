@@ -23,8 +23,7 @@ import com.google.firebase.firestore.Query;
 
 public class AddStepJourneyActivity extends AppCompatActivity {
     private TextView textViewJourneyTitle;
-    private TextView textViewJourneyOwner;
-    private String idJourney;
+    private TextView textViewJourneyAccesKey;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference stepbookRef = db.collection("StepBook");
@@ -42,17 +41,17 @@ public class AddStepJourneyActivity extends AppCompatActivity {
 
 
         textViewJourneyTitle = findViewById(R.id.JourneyItem_title);
-        textViewJourneyOwner = findViewById(R.id.JourneyItem_owner);
+        textViewJourneyAccesKey = findViewById(R.id.JourneyItem_owner);
 
-        idJourney = getIntent().getExtras().getString("journeyId");
-        textViewJourneyOwner.setText(getIntent().getExtras().getString("journeyOwner"));
+        textViewJourneyAccesKey.setText(getIntent().getExtras().getString("journeyId"));
         textViewJourneyTitle.setText(getIntent().getExtras().getString("journeyTitle"));
 
         FloatingActionButton buttonAddStep = findViewById(R.id.btn_JourneyItem_add_step);
         buttonAddStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), NewStepActivity.class).putExtra("idJourney", idJourney));
+                startActivity(new Intent(getApplicationContext(), NewStepActivity.class).putExtra(
+                        "idJourney", textViewJourneyAccesKey.getText().toString()));
             }
         });
 
@@ -62,7 +61,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
 
     private void setUpRecyclerView() {
         Query query = stepbookRef
-                .whereEqualTo("id_journey", idJourney)
+                .whereEqualTo("id_journey", textViewJourneyAccesKey.getText().toString())
                 .orderBy("stepNumber" , Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<Step> options = new FirestoreRecyclerOptions.Builder<Step>()
