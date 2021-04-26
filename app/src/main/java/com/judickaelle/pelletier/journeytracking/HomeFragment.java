@@ -127,6 +127,7 @@ public class HomeFragment extends Fragment{
                 builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //TODO delete all step link to the journey
                         adapter.deleteItem(viewHolder.getAdapterPosition());
                         refresh();
                     }

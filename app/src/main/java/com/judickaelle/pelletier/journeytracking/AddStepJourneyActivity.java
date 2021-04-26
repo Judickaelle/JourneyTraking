@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -24,19 +23,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SnapshotMetadata;
 
 public class AddStepJourneyActivity extends AppCompatActivity {
     private TextView textViewJourneyTitle;
     private TextView textViewJourneyAccesKey;
+    int nombreEtape;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference stepbookRef = db.collection("StepBook");
+    private Query query;
 
     private StepAdapter stepAdapter;
+    private RecyclerView recyclerView;
 
     @SuppressLint("ResourceType")
     @Override
@@ -47,7 +54,6 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.colorPrimary))));
 
-
         textViewJourneyTitle = findViewById(R.id.JourneyItem_title);
         textViewJourneyAccesKey = findViewById(R.id.JourneyItem_owner);
 
@@ -55,11 +61,22 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         textViewJourneyTitle.setText(getIntent().getExtras().getString("journeyTitle"));
 
         FloatingActionButton buttonAddStep = findViewById(R.id.btn_JourneyItem_add_step);
+
         buttonAddStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), NewStepActivity.class).putExtra(
-                        "idJourney", textViewJourneyAccesKey.getText().toString()));
+                DocumentSnapshot lastDocument = stepAdapter.getSnapshots().getSnapshot(nombreEtape-1);
+                //recupère le numero d'étape du dernier document retourné
+                Step step = lastDocument.toObject(Step.class);
+                int nvNombreEtape = step.getStepNumber()+1;
+                if(nombreEtape < 10){
+                    Intent i = new Intent(getApplicationContext(), NewStepActivity.class);
+                    i.putExtra("idJourney", textViewJourneyAccesKey.getText().toString());
+                    i.putExtra("stepNumber", String.valueOf(nvNombreEtape));
+                    startActivity(i);
+                }else{
+                 Toast.makeText(getApplicationContext(), "you can't add more than 10 step", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -69,7 +86,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerView() {
-        Query query = stepbookRef
+        query = stepbookRef
                 .whereEqualTo("id_journey", textViewJourneyAccesKey.getText().toString())
                 .orderBy("stepNumber" , Query.Direction.ASCENDING);
 
@@ -79,7 +96,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
 
         stepAdapter = new StepAdapter(options);
 
-        RecyclerView recyclerView = findViewById(R.id.step_recycler_view);
+        recyclerView = findViewById(R.id.step_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(stepAdapter);
@@ -102,6 +119,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         stepAdapter.deleteItem(viewHolder.getAdapterPosition());
+                        itemCount(); //count the number of step in the selected journey
                     }
                 });
                 builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -113,6 +131,23 @@ public class AddStepJourneyActivity extends AppCompatActivity {
                 dialog.show();
             }
         }).attachToRecyclerView(recyclerView);
+    }
+
+    private void itemCount() {
+        nombreEtape = 0;
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot document : task.getResult()){
+                        nombreEtape++;
+                    }
+                    Log.d("tag", "nombre d'item : " + nombreEtape);
+                }else {
+                    Log.d("tag", "error getting number document : ", task.getException());
+                }
+            }
+        });
     }
 
     private void copyToClipboard(){
@@ -137,6 +172,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         stepAdapter.startListening();
+        itemCount(); //count the number of step in the selected journey
     }
 
     @Override

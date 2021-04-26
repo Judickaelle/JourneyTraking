@@ -56,8 +56,8 @@ public class NewStepActivity extends AppCompatActivity {
         newStepLongitude = findViewById(R.id.newStepItem_longitude);
         newStepNumber = findViewById(R.id.newStepItem_number);
         getGPSlocation = findViewById(R.id.btn_getGPSposition);
-
         idJourney = getIntent().getExtras().getString("idJourney");
+        newStepNumber.setText(getIntent().getExtras().getString("stepNumber"));
 
         //initialize fusedLocationProviderClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
