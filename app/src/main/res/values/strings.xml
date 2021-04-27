@@ -54,4 +54,5 @@
     <string name="get_location">Get location</string>
     <string name="access_key_copy">Access key copy to clipboard</string>
     <string name="title_add_step_journey_activity">Resume of my journey</string>
+    <string name="map_title">Journey : </string>
 </resources>

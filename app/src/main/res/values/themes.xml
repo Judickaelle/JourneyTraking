@@ -16,6 +16,9 @@
         <!-- Customize your theme here. -->
         <item name="actionBarItemBackground">@color/purple_500</item>
         <item name="android:colorButtonNormal">@color/colorAccent</item>
+
+        <!--Customize font -->
+
     </style>
     <style name="Theme.JourneyTracking.WithActionBar">
         <item name="android:statusBarColor">@color/fui_transparent</item>

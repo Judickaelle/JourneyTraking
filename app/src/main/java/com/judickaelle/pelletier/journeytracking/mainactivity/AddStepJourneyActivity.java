@@ -38,19 +38,17 @@ import com.judickaelle.pelletier.journeytracking.step.Step;
 import com.judickaelle.pelletier.journeytracking.step.StepAdapter;
 
 public class AddStepJourneyActivity extends AppCompatActivity {
-    private TextView textViewJourneyTitle;
     private TextView textViewJourneyAccesKey;
-    int nombreEtape;
+    private int nombreEtape;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference stepbookRef = db.collection("StepBook");
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference stepbookRef = db.collection("StepBook");
     private Query query;
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton buttonAddStep, buttonPreviewJourney;
 
     private StepAdapter stepAdapter;
-    private RecyclerView recyclerView;
 
     @SuppressLint("ResourceType")
     @Override
@@ -62,7 +60,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         setTitle(getString(R.string.title_add_step_journey_activity));
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.colorPrimary))));
 
-        textViewJourneyTitle = findViewById(R.id.JourneyItem_title);
+        TextView textViewJourneyTitle = findViewById(R.id.JourneyItem_title);
         textViewJourneyAccesKey = findViewById(R.id.JourneyItem_owner);
 
         textViewJourneyAccesKey.setText(getIntent().getExtras().getString("journeyId"));
@@ -116,6 +114,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                i.putExtra("accessKey", textViewJourneyAccesKey.getText().toString());
                 startActivity(i);
             }
         });
@@ -132,7 +131,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
 
         stepAdapter = new StepAdapter(options);
 
-        recyclerView = findViewById(R.id.step_recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.step_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(stepAdapter);
