@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking;
+package com.judickaelle.pelletier.journeytracking.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.judickaelle.pelletier.journeytracking.mainactivity.NavigationDrawerActivity;
+import com.judickaelle.pelletier.journeytracking.R;
 
 public class Register extends AppCompatActivity {
 

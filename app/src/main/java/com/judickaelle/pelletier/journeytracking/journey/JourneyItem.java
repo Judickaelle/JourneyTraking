@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking;
+package com.judickaelle.pelletier.journeytracking.journey;
 
 public class JourneyItem {
     private String title;

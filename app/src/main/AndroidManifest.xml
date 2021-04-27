@@ -24,7 +24,7 @@
 
 
         <activity
-            android:name=".Login"
+            android:name=".Login.Login"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,25 +32,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Register" />
+        <activity android:name=".Login.Register" />
         <activity
-            android:name=".NavigationDrawerActivity"
+            android:name=".mainactivity.NavigationDrawerActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".NewJourneyItemActivity"
-            android:parentActivityName=".NavigationDrawerActivity"
+            android:name=".journey.NewJourneyItemActivity"
+            android:parentActivityName=".mainactivity.NavigationDrawerActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar" />
         <activity
-            android:name=".AddStepJourneyActivity"
+            android:name=".mainactivity.AddStepJourneyActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".NavigationDrawerActivity"
+            android:parentActivityName=".mainactivity.NavigationDrawerActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar" />
         <activity
-            android:name=".NewStepActivity"
-            android:parentActivityName=".AddStepJourneyActivity"
+            android:name=".step.NewStepActivity"
+            android:parentActivityName=".mainactivity.AddStepJourneyActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar"/>
         <activity
-            android:name=".MapsActivity"
+            android:name=".mainactivity.MapsActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar"/>
     </application>
 

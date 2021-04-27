@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking;
+package com.judickaelle.pelletier.journeytracking.mainactivity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.judickaelle.pelletier.journeytracking.R;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 

@@ -1,17 +1,16 @@
-package com.judickaelle.pelletier.journeytracking;
+package com.judickaelle.pelletier.journeytracking.step;
 
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.judickaelle.pelletier.journeytracking.R;
 
 public class StepAdapter extends FirestoreRecyclerAdapter<Step, StepAdapter.StepHolder> {
 

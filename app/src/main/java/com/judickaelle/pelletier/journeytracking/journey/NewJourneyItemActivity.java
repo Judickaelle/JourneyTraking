@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking;
+package com.judickaelle.pelletier.journeytracking.journey;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.judickaelle.pelletier.journeytracking.R;
 
 public class NewJourneyItemActivity extends AppCompatActivity {
     private EditText txtJourneyTitle;

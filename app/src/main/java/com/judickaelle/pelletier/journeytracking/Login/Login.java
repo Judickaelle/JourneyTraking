@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking;
+package com.judickaelle.pelletier.journeytracking.Login;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.judickaelle.pelletier.journeytracking.mainactivity.NavigationDrawerActivity;
+import com.judickaelle.pelletier.journeytracking.R;
 
 public class  Login extends Activity {
 

@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking;
+package com.judickaelle.pelletier.journeytracking.mainactivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -32,7 +32,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SnapshotMetadata;
+import com.judickaelle.pelletier.journeytracking.R;
+import com.judickaelle.pelletier.journeytracking.step.NewStepActivity;
+import com.judickaelle.pelletier.journeytracking.step.Step;
+import com.judickaelle.pelletier.journeytracking.step.StepAdapter;
 
 public class AddStepJourneyActivity extends AppCompatActivity {
     private TextView textViewJourneyTitle;

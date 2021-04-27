@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking;
+package com.judickaelle.pelletier.journeytracking.journey;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.judickaelle.pelletier.journeytracking.R;
 
 public class JourneyItemAdapter extends FirestoreRecyclerAdapter<JourneyItem, JourneyItemAdapter.JourneyItemHolder>{
 
