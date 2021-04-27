@@ -55,7 +55,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_step_journey_item);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         setTitle(getString(R.string.title_add_step_journey_activity));
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.colorPrimary))));
 
@@ -88,10 +88,15 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         buttonAddStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DocumentSnapshot lastDocument = stepAdapter.getSnapshots().getSnapshot(nombreEtape-1);
-                //get the stepNumber from le last documentSnapshot find
-                Step step = lastDocument.toObject(Step.class);
-                int nvNombreEtape = step.getStepNumber()+1;
+                int nvNombreEtape;
+                if(stepAdapter.getSnapshots().isEmpty()){
+                    nvNombreEtape = 1;
+                }else{
+                    DocumentSnapshot lastDocument = stepAdapter.getSnapshots().getSnapshot(nombreEtape-1);
+                    //get the stepNumber from le last documentSnapshot find
+                    Step step = lastDocument.toObject(Step.class);
+                    nvNombreEtape = step.getStepNumber()+1;
+                }
                 if(nombreEtape < 10){
                     Intent i = new Intent(getApplicationContext(), NewStepActivity.class);
                     i.putExtra("idJourney", textViewJourneyAccesKey.getText().toString());
@@ -147,6 +152,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         stepAdapter.deleteItem(viewHolder.getAdapterPosition());
+                        //TODO quand on supprime une étape on refait la chronologie des étapes restantes
                         itemCount(); //count the number of step in the selected journey
                     }
                 });
