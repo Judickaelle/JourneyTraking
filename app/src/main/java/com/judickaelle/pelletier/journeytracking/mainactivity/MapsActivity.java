@@ -42,13 +42,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private CollectionReference stepbookRef;
     private String accesKey;
     private Double latOne, longOne, latitude, longitude;
-    static boolean next = false;
 
-    private static ArrayList<Step> listStep = new ArrayList<Step>();
+    private ArrayList<Step> listStep = new ArrayList<Step>();
+    private ArrayList<Marker> listMarker = new ArrayList<Marker>();
 
     private JourneyItem journeyItem;
-    private Step myStep;
-    private Step stepOne;
+    private Step myStep, stepOne;
     private Query query;
 
     private GoogleMap mMap;
@@ -62,6 +61,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
         //get the accessKey
         accesKey = getIntent().getExtras().getString("accessKey");
@@ -99,6 +99,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        getStep();
+    }
+
+
+    private void getStep() {
         //get step of the journey thanks to the idJourney
         query = stepbookRef
                 .whereEqualTo("id_journey", accesKey)
@@ -107,58 +112,67 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    //Log.d("tag", "taille liste récupérée  : " + task.getResult().size());
+                    //Log.d("tag", "taille document récupérée  : " + task.getResult().size());
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                        //Step step = documentSnapshot.toObject(Step.class);
-                        //Log.d("tag", "numéro step  : " + step.getStepNumber() + "  titre : " + step.getStepTitle());
+                        Step step = documentSnapshot.toObject(Step.class);
+                        Log.d("tag", "numéro step  : " + step.getStepNumber() + "  titre : " + step.getStepTitle());
                         listStep.add(documentSnapshot.toObject(Step.class));
                     }
+                    Log.d("tag", "list size : " + listStep.size());
                 } else {
                     Log.e("tag", "Error getting documents: ", task.getException());
                 }
             }
         });
-
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        Log.d("tag", "list size : " + listStep.size());
 
-        //define a polyline
-        PolylineOptions polylineOptions = new PolylineOptions();
+        setMap();
+    }
 
-        //initialization of the map and focus on the first marker
-        stepOne = listStep.get(0);
-        latOne = Double.parseDouble(stepOne.getLatitude());
-        longOne = Double.parseDouble(stepOne.getLongitude());
-        createMarker(mMap, latOne, longOne, stepOne.getStepTitle());
-        //move the camera
-        LatLng initial = new LatLng(latOne, longOne);
-        polylineOptions.add(initial);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(initial));
-        //zoom en 10x
-        CameraPosition cameraPos = new CameraPosition.Builder().target(initial).zoom(10).build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPos));
+    private void setMap() {
+        if(listStep.size()>0){
+            //define a polyline
+            PolylineOptions polylineOptions = new PolylineOptions();
 
+            //initialization of the map and focus on the first marker
+            stepOne = listStep.get(0);
+            latOne = Double.parseDouble(stepOne.getLatitude());
+            longOne = Double.parseDouble(stepOne.getLongitude());
+            listMarker.add(createMarker(mMap, latOne, longOne, stepOne.getStepTitle()));
 
-        //add the other step on the map
-        for (int i = 1; i < listStep.size(); i++) {
-            myStep = listStep.get(i);
-            Log.d("tag", "step " + myStep.getStepTitle());
-            latitude = Double.parseDouble(myStep.getLatitude());
-            longitude = Double.parseDouble(myStep.getLongitude());
-            polylineOptions.add(new LatLng(latitude, longitude));
-            createMarker(mMap, latitude, longitude, myStep.getStepTitle());
+            //move the camera
+            LatLng initial = new LatLng(latOne, longOne);
+            polylineOptions.add(initial);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(initial));
+
+            //zoom en 10x
+            CameraPosition cameraPos = new CameraPosition.Builder().target(initial).zoom(10).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPos));
+
+            //add the other step on the map
+            for (int i = 1; i < listStep.size(); i++) {
+                myStep = listStep.get(i);
+                Log.d("tag", "step " + myStep.getStepTitle());
+                latitude = Double.parseDouble(myStep.getLatitude());
+                longitude = Double.parseDouble(myStep.getLongitude());
+                polylineOptions.add(new LatLng(latitude, longitude));
+                Marker marker = createMarker(mMap, latitude, longitude, myStep.getStepTitle());
+                listMarker.add(marker);
+            }
+            mMap.addPolyline(polylineOptions);
         }
-        mMap.addPolyline(polylineOptions);
     }
 
 
-    protected void createMarker(GoogleMap googleMap, double lat, double lng, String title) {
+    protected Marker createMarker(GoogleMap googleMap, double lat, double lng, String title) {
         Log.d("tag", "step " + title + " added to the map");
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title));
+        return googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title).visible(true));
     }
 
     //finish the activity on button back press

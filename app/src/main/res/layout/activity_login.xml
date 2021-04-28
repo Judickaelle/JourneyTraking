@@ -58,7 +58,6 @@
             android:background="@color/common_google_signin_btn_text_light_default"
             android:ems="10"
             android:hint="@string/enter_a_secret_code"
-            android:inputType="number"
             android:padding="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"

@@ -1,16 +1,18 @@
 package com.judickaelle.pelletier.journeytracking.Login;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -22,18 +24,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.judickaelle.pelletier.journeytracking.mainactivity.MapsActivity;
 import com.judickaelle.pelletier.journeytracking.mainactivity.NavigationDrawerActivity;
 import com.judickaelle.pelletier.journeytracking.R;
 
-public class  Login extends Activity {
-
+public class  Login extends AppCompatActivity {
     private TextView loginToRegiter;
-    private EditText txtLoginWithEmail;
-    private EditText txtLoginWithPwd;
+    private EditText txtLoginWithEmail, txtLoginWithPwd, txtLoginGuest;
 
     private SignInButton googleSignIn;
-    private Button memberSignIn;
-    private Button secretCodeSignIn;
+    private Button memberSignIn, secretCodeSignIn;
 
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth firebaseAuth;
@@ -46,6 +46,7 @@ public class  Login extends Activity {
 
         txtLoginWithEmail = findViewById(R.id.loginWithEmail);
         txtLoginWithPwd = findViewById(R.id.loginEnterPassword);
+        txtLoginGuest = findViewById(R.id.loginSecretCode);
 
         googleSignIn = findViewById(R.id.googleSignInButton);
         memberSignIn = findViewById(R.id.btnSignInMember);
@@ -61,9 +62,21 @@ public class  Login extends Activity {
         OpenRegisterActivity();
 
         //go to the guest space
-        //TODO create the function to go there
+        OpenMapActivity();
 
         }
+
+    private void OpenMapActivity() {
+        secretCodeSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO vérifier que la clé existe
+                Intent i = new Intent(Login.this, MapsActivity.class);
+                i.putExtra("accessKey", txtLoginGuest.getText().toString().trim());
+                startActivity(i);
+            }
+        });
+    }
 
     public void UserConnection(){
         ConnectionWithGoogle();

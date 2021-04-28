@@ -113,7 +113,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         buttonPreviewJourney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                Intent i = new Intent(AddStepJourneyActivity.this, MapsActivity.class);
                 i.putExtra("accessKey", textViewJourneyAccesKey.getText().toString());
                 startActivity(i);
             }
