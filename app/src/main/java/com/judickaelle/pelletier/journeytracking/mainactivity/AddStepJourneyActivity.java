@@ -99,10 +99,15 @@ public class AddStepJourneyActivity extends AppCompatActivity {
                     nvNombreEtape = step.getStepNumber()+1;
                 }
                 if(nombreEtape < 10){
-                    Intent i = new Intent(getApplicationContext(), NewStepActivity.class);
-                    i.putExtra("idJourney", textViewJourneyAccesKey.getText().toString());
-                    i.putExtra("stepNumber", String.valueOf(nvNombreEtape));
-                    startActivity(i);
+                    try {
+                        Intent i = new Intent(getApplicationContext(), NewStepActivity.class);
+                        i.putExtra("idJourney", textViewJourneyAccesKey.getText().toString());
+                        i.putExtra("stepNumber", String.valueOf(nvNombreEtape));
+                        startActivity(i);
+                    }catch (Exception e){
+                        Log.e("tag", "error : " + e);
+                    }
+
                 }else{
                     Toast.makeText(getApplicationContext(), "you can't add more than 10 step", Toast.LENGTH_SHORT).show();
                 }
@@ -113,9 +118,14 @@ public class AddStepJourneyActivity extends AppCompatActivity {
         buttonPreviewJourney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(AddStepJourneyActivity.this, MapsActivity.class);
-                i.putExtra("accessKey", textViewJourneyAccesKey.getText().toString());
-                startActivity(i);
+                try{
+                    Intent i = new Intent(AddStepJourneyActivity.this, MapsActivity.class);
+                    i.putExtra("accessKey", textViewJourneyAccesKey.getText().toString());
+                    startActivity(i);
+                }catch (Exception e){
+                    Log.e("tag", "error : " + e);
+                }
+
             }
         });
     }
@@ -153,8 +163,20 @@ public class AddStepJourneyActivity extends AppCompatActivity {
                 builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        stepAdapter.deleteItem(viewHolder.getAdapterPosition());
-                        //TODO quand on supprime une étape on refait la chronologie des étapes restantes
+                        //When an item is deleted then all the other stepNumber are updated
+                        int position = viewHolder.getAdapterPosition();
+                        int endList = nombreEtape-2;
+                        try {
+                            for(int i=position; i<=endList; i++){
+                                String nextDoc = stepAdapter.getSnapshots().getSnapshot(i+1).getId();
+                                stepbookRef.document(nextDoc).update("stepNumber", i+1);
+                            }
+                        }catch (Exception e){
+                            Log.e("tag", "error : " + e);
+                        }
+
+                        stepAdapter.deleteItem(position);
+                        refresh();
                         itemCount(); //count the number of step in the selected journey
                     }
                 });
