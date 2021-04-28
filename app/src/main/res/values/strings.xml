@@ -55,4 +55,5 @@
     <string name="access_key_copy">Access key copy to clipboard</string>
     <string name="title_add_step_journey_activity">Resume of my journey</string>
     <string name="map_title">Journey : </string>
+    <string name="accessKey_not_valid">The access key is not valid</string>
 </resources>

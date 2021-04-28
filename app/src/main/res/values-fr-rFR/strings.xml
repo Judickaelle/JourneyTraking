@@ -51,4 +51,5 @@
     <string name="get_location">Récupérer ma position</string>
     <string name="title_add_step_journey_activity">Resume of my journey</string>
     <string name="map_title">\"Journey : \"</string>
+    <string name="accessKey_not_valid">The access key is not valid</string>
 </resources>

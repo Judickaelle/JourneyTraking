@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -20,10 +21,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.judickaelle.pelletier.journeytracking.mainactivity.MapsActivity;
 import com.judickaelle.pelletier.journeytracking.mainactivity.NavigationDrawerActivity;
 import com.judickaelle.pelletier.journeytracking.R;
@@ -38,6 +43,8 @@ public class  Login extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth firebaseAuth;
     private static final int RC_SIGN_IN = 9001;
+
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +77,21 @@ public class  Login extends AppCompatActivity {
         secretCodeSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO vérifier que la clé existe
-                Intent i = new Intent(Login.this, MapsActivity.class);
-                i.putExtra("accessKey", txtLoginGuest.getText().toString().trim());
-                startActivity(i);
+                //check if the access key exist
+                String accesKey = txtLoginGuest.getText().toString().trim();
+                DocumentReference myJourney = db.collection("JourneyBook").document(accesKey);
+                myJourney.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful() && task.getResult().exists()) {
+                            Intent i = new Intent(Login.this, MapsActivity.class);
+                            i.putExtra("accessKey", accesKey);
+                            startActivity(i);
+                        } else {
+                            txtLoginGuest.setError(getString(R.string.accessKey_not_valid));
+                        }
+                    }
+                });
             }
         });
     }
