@@ -84,9 +84,13 @@ public class  Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful() && task.getResult().exists()) {
-                            Intent i = new Intent(Login.this, MapsActivity.class);
-                            i.putExtra("accessKey", accesKey);
-                            startActivity(i);
+                            try {
+                                Intent i = new Intent(Login.this, MapsActivity.class);
+                                i.putExtra("accessKey", accesKey);
+                                startActivity(i);
+                            }catch (Exception e){
+                                Log.e("tag", "error : " + e);
+                            }
                         } else {
                             txtLoginGuest.setError(getString(R.string.accessKey_not_valid));
                         }

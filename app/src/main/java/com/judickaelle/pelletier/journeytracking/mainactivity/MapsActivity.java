@@ -83,18 +83,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (task.isSuccessful()) {
                     document = task.getResult();
                     if (document.exists()) {
-                        Log.d("tag", "Journey exist : " + document.getData());
                         journeyItem = document.toObject(JourneyItem.class);
-                        Log.d("tag", "Journey title : " + journeyItem.getTitle());
 
                         //set title and subtitle on the action bar
                         actionBar.setTitle(getString(R.string.map_title) + " " + journeyItem.getTitle());
                         actionBar.setSubtitle(accesKey);
                     } else {
-                        Log.d("tag", "no such document");
+                        Log.e("tag", "no such document");
                     }
                 } else {
-                    Log.d("tag", "get document failed with : " + task.getException());
+                    Log.e("tag", "get document failed with : " + task.getException());
                 }
             }
         });
@@ -115,10 +113,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     //Log.d("tag", "taille document récupérée  : " + task.getResult().size());
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                         Step step = documentSnapshot.toObject(Step.class);
-                        Log.d("tag", "numéro step  : " + step.getStepNumber() + "  titre : " + step.getStepTitle());
+                        //Log.d("tag", "numéro step  : " + step.getStepNumber() + "  titre : " + step.getStepTitle());
                         listStep.add(documentSnapshot.toObject(Step.class));
                     }
-                    Log.d("tag", "list size : " + listStep.size());
+                    //Log.d("tag", "list size : " + listStep.size());
                 } else {
                     Log.e("tag", "Error getting documents: ", task.getException());
                 }
