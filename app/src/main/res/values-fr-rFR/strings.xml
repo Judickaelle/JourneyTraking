@@ -49,7 +49,7 @@
     <string name="error_creation_new_step">Veuillez compléte tous les champs</string>
     <string name="step_added">Etape ajoutée au voyage</string>
     <string name="get_location">Récupérer ma position</string>
-    <string name="title_add_step_journey_activity">Resume of my journey</string>
-    <string name="map_title">\"Journey : \"</string>
-    <string name="accessKey_not_valid">The access key is not valid</string>
+    <string name="map_title">Voyage :</string>
+    <string name="accessKey_not_valid">La clé d\'accès n\'est pas valide</string>
+    <string name="title_add_step_journey_activity">Résumer de mon voyage</string>
 </resources>
