@@ -16,7 +16,7 @@
     <string name="press_log_out">Vous êtes bien déconnecté</string>
     <string name="register_email_error">Veuillez rentrer une adresse mail valide</string>
     <string name="register_pwd_error">Veuillez rentrer un mot de passe</string>
-    <string name="register_pwd_length_error">Le mot de passe doit contenir au minimum 5 caractères</string>
+    <string name="register_pwd_length_error">Le mot de passe doit contenir au minimum 6 caractères</string>
     <string name="register_pwd_not_equals">Les mots de passe doivent être identique</string>
     <string name="register_user_created">Utilisateur créé</string>
     <string name="error">"Erreur : "</string>
@@ -52,4 +52,7 @@
     <string name="map_title">Voyage :</string>
     <string name="accessKey_not_valid">La clé d\'accès n\'est pas valide</string>
     <string name="title_add_step_journey_activity">Résumer de mon voyage</string>
+    <string name="firebase_credential_error">Le mot de passe est invalide.</string>
+    <string name="firebase_collision_error">l\'adresse mail est déjà utilisée par un autre compte.</string>
+    <string name="firebase_user_error">Il n\'y a pas d\'utilisateur correspondant à cet identifiant.</string>
 </resources>

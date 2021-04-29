@@ -25,6 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -113,6 +115,7 @@ public class  Login extends AppCompatActivity {
 
             //we are checking if all the information are correct to allow the use's registering
             if(TextUtils.isEmpty(emailAdress)||!Patterns.EMAIL_ADDRESS.matcher(emailAdress).matches()){
+                txtLoginWithEmail.getText().clear();
                 txtLoginWithEmail.setError(getString(R.string.register_email_error));
                 return;
             }
@@ -127,7 +130,20 @@ public class  Login extends AppCompatActivity {
                             Toast.makeText(Login.this, getString(R.string.authentication), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
                         }else {
-                            Toast.makeText(Login.this, getString(R.string.error) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                           try {
+                                throw task.getException();
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                               txtLoginWithPwd.getText().clear();
+                               txtLoginWithPwd.setError(getString(R.string.firebase_credential_error));
+                               txtLoginWithPwd.requestFocus();
+                            } catch(FirebaseAuthInvalidUserException e) {
+                                txtLoginWithEmail.getText().clear();
+                                txtLoginWithEmail.setError(getString(R.string.firebase_user_error));
+                                txtLoginWithEmail.requestFocus();
+                            } catch(Exception e) {
+                                Toast.makeText(Login.this, getString(R.string.error) + e.getMessage(), Toast.LENGTH_LONG).show();
+                                Log.e("tag", e.getMessage());
+                            }
                         }
                     }
             );

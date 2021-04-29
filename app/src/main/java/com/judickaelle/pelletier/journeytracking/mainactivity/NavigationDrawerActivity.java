@@ -59,6 +59,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             getSupportFragmentManager().beginTransaction().replace(id.fragment_container,
                     new HomeFragment()).commit();
             navigationView.setCheckedItem(id.nav_home);
+            setTitle(getString(string.menu_home));
         }
 
         //extract information from user

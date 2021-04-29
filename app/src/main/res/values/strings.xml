@@ -27,7 +27,7 @@
     <string name="IdTocken" translatable="false">418964118685-ftp6kr407282glb6urmlh0mlkccjqf87.apps.googleusercontent.com</string>
     <string name="register_email_error">A valid email is required</string>
     <string name="register_pwd_error">Password is required</string>
-    <string name="register_pwd_length_error">Password must have more than 5 characters</string>
+    <string name="register_pwd_length_error">Password should be at least 6 characters</string>
     <string name="register_pwd_not_equals">Passwords must be the same</string>
     <string name="register_user_created">User created</string>
     <string name="error">Error : </string>
@@ -56,4 +56,7 @@
     <string name="title_add_step_journey_activity">Resume of my journey</string>
     <string name="map_title">Journey : </string>
     <string name="accessKey_not_valid">The access key is not valid</string>
+    <string name="firebase_credential_error">The password is invalid.</string>
+    <string name="firebase_user_error">"There is no user record corresponding to this identifier. "</string>
+    <string name="firebase_collision_error">The email address is already in use by another account.</string>
 </resources>

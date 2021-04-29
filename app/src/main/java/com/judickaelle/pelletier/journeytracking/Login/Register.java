@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.judickaelle.pelletier.journeytracking.mainactivity.NavigationDrawerActivity;
 import com.judickaelle.pelletier.journeytracking.R;
 
@@ -58,7 +60,7 @@ public class Register extends AppCompatActivity {
             if(TextUtils.isEmpty(password)){
                 registerEnterPwd.setError(getString(R.string.register_pwd_error));
                 return;
-            }else if (password.length() < 5){
+            }else if (password.length() <= 5){
                 registerEnterPwd.setError(getString(R.string.register_pwd_length_error));
                 return;
             }
@@ -78,7 +80,22 @@ public class Register extends AppCompatActivity {
                    startActivity(new Intent(getApplicationContext(), NavigationDrawerActivity.class));
                    finish();
                }else {
-                   Toast.makeText(Register.this, getString(R.string.error) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                   Log.e("tag", "erreur : " + task.getException());
+                   try{
+                       throw task.getException();
+                   }catch (FirebaseAuthWeakPasswordException e){
+                       registerEnterPwd.getText().clear();
+                       registerRepeatPwd.getText().clear();
+                       registerEnterPwd.setError(getString(R.string.register_pwd_length_error));
+                   }catch (FirebaseAuthUserCollisionException e){
+                       registerEmail.getText().clear();
+                       registerEnterPwd.getText().clear();
+                       registerRepeatPwd.getText().clear();
+                       registerEmail.setError(getString(R.string.firebase_collision_error));
+                   }catch (Exception e){
+                       Toast.makeText(Register.this, getString(R.string.error) + e, Toast.LENGTH_LONG).show();
+                   }
+
                }
             });
         });
