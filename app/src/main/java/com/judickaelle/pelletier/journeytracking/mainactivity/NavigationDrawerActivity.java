@@ -38,9 +38,15 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
 
+        //set toolbar
         Toolbar toolbar = findViewById(id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(id.drawer_layout);
+
+        //set color of the status bar
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(id.drawer_layout);
+        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(color.colorPrimaryDark));
+
 
         //create view for the header
         NavigationView navigationView = findViewById(id.nav_view);

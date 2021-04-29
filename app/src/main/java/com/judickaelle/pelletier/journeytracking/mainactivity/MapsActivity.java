@@ -62,7 +62,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
         //get the accessKey
         accesKey = getIntent().getExtras().getString("accessKey");
 
@@ -129,7 +128,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Log.d("tag", "list size : " + listStep.size());
-
         setMap();
     }
 

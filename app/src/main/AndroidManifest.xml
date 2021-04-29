@@ -29,21 +29,21 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
-
         <activity
             android:name=".Login.Login"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.JourneyTracking.NoStatustBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.Register" />
+        <activity android:name=".Login.Register"
+            android:theme="@style/Theme.JourneyTracking.NoStatustBar" />
         <activity
             android:name=".mainactivity.NavigationDrawerActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"/>
         <activity
             android:name=".journey.NewJourneyItemActivity"
             android:parentActivityName=".mainactivity.NavigationDrawerActivity"

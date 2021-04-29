@@ -15,15 +15,18 @@
         <item name="windowNoTitle">true</item>
         <!-- Customize your theme here. -->
         <item name="actionBarItemBackground">@color/purple_500</item>
-        <item name="android:colorButtonNormal">@color/colorAccent</item>
 
         <!--Customize font -->
 
     </style>
     <style name="Theme.JourneyTracking.WithActionBar">
-        <item name="android:statusBarColor">@color/fui_transparent</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item></style>
     <style name="Theme.JourneyTracking.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.JourneyTracking.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.JourneyTracking.NoStatustBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
 </resources>
