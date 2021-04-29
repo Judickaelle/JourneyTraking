@@ -1,8 +1,14 @@
 package com.judickaelle.pelletier.journeytracking.mainactivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -117,7 +124,31 @@ public class HomeFragment extends Fragment{
                 return false;
             }
 
+            @SuppressLint("ResourceType")
             @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                final int DIRECTION_RIGHT = 1;
+                final int DIRECTION_LEFT = 0;
+                if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
+                    int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = (int) Math.abs(dX);
+
+                    if(direction == DIRECTION_LEFT){
+
+                        //draw background
+                        View itemView = viewHolder.itemView;
+                        ColorDrawable bg = new ColorDrawable();
+                        bg.setColor(Color.RED);
+                        bg.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                        bg.draw(c);
+                    }
+
+
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+
+                @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 //show an alert dialog to confirm the suppression
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
