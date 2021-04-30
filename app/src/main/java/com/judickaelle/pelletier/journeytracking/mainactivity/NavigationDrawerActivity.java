@@ -13,6 +13,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.judickaelle.pelletier.journeytracking.Login.Login;
 import com.judickaelle.pelletier.journeytracking.R;
+import com.judickaelle.pelletier.journeytracking.mainactivity.MyJourneyFragment.MyjourneyFragment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -63,7 +64,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         //when we start the activity, the home fragment is showing up
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(id.fragment_container,
-                    new HomeFragment()).commit();
+                    new MyjourneyFragment()).commit();
             navigationView.setCheckedItem(id.nav_home);
             setTitle(getString(string.menu_home));
         }
@@ -80,9 +81,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_home:
-                //HomeFragment homeFragment = new HomeFragment();
+                //MyjourneyFragment homeFragment = new MyjourneyFragment();
                 //homeFragment.setArguments(emailBundle);
-                getSupportFragmentManager().beginTransaction().replace(id.fragment_container, new HomeFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(id.fragment_container, new MyjourneyFragment()).commit();
                 break;
             case R.id.nav_sign_out:
                 logout();

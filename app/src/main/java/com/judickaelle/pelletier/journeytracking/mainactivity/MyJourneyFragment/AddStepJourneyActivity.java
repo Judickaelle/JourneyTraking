@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.mainactivity;
+package com.judickaelle.pelletier.journeytracking.mainactivity.MyJourneyFragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -34,6 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.judickaelle.pelletier.journeytracking.R;
+import com.judickaelle.pelletier.journeytracking.mainactivity.MapsActivity;
 import com.judickaelle.pelletier.journeytracking.step.NewStepActivity;
 import com.judickaelle.pelletier.journeytracking.step.Step;
 import com.judickaelle.pelletier.journeytracking.step.StepAdapter;

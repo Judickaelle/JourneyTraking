@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.mainactivity;
+package com.judickaelle.pelletier.journeytracking.mainactivity.MyJourneyFragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,7 +39,7 @@ import com.judickaelle.pelletier.journeytracking.journey.NewJourneyItemActivity;
 
 import java.util.Objects;
 
-public class HomeFragment extends Fragment{
+public class MyjourneyFragment extends Fragment{
 
     private CollectionReference journeybookRef, stepbookRef;
     private View view;
