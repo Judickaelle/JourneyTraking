@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.judickaelle.pelletier.journeytracking.mainactivity.NavigationDrawerActivity;
+import com.judickaelle.pelletier.journeytracking.MainActivity.NavigationDrawerActivity;
 import com.judickaelle.pelletier.journeytracking.R;
 
 public class Register extends AppCompatActivity {
@@ -71,8 +71,7 @@ public class Register extends AppCompatActivity {
                 return;
             }
 
-            //all conditions are right. we can start
-            //register the user in Firebase
+            //all conditions are right. we can start register the user in Firebase
             fAuth.createUserWithEmailAndPassword(emailAdress,password).addOnCompleteListener(task -> {
                if(task.isSuccessful()){
                    progressBar.setVisibility(View.VISIBLE);

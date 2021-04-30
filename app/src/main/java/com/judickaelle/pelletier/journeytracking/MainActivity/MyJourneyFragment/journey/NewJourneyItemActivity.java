@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.journey;
+package com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.journey;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,8 +64,9 @@ public class NewJourneyItemActivity extends AppCompatActivity {
         String title = txtJourneyTitle.getText().toString();
         String owner = txtJourneyOwner.getText().toString();
 
+        //if no title are enter then no Journey item is created
         if(title.trim().isEmpty()){
-            Toast.makeText(this, R.string.error_newJourneyItem_titleOrSecretKeyEmpty, Toast.LENGTH_SHORT).show();
+            txtJourneyTitle.setError(getString(R.string.error_newJourneyItem_titleOrSecretKeyEmpty));
             return;
         }
 

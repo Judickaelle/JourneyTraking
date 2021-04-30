@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.journey;
+package com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.journey;
 
 public class JourneyItem {
     private String title;
@@ -17,7 +17,4 @@ public class JourneyItem {
         return title;
     }
 
-    public String getOwner() {
-        return owner;
-    }
 }

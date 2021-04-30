@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.journey;
+package com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.journey;
 
 import android.util.Log;
 import android.view.LayoutInflater;

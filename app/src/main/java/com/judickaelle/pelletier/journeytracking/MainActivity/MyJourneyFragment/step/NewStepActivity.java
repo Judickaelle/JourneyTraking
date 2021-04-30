@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.step;
+package com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.step;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -118,9 +118,15 @@ public class NewStepActivity extends AppCompatActivity {
         String id_journey = idJourney;
         int stepNumber = Integer.parseInt(newStepNumber.getText().toString());
 
-        if(stepTitle.trim().isEmpty()||latitude.trim().isEmpty() || longitude.trim().isEmpty()){
-            Toast.makeText(this, R.string.error_creation_new_step, Toast.LENGTH_SHORT).show();
-            return;
+        //verification that all steps are completed
+        if(stepTitle.trim().isEmpty()){
+            newStepTitle.setError(getString(R.string.error_creation_new_step));
+        }
+        if(latitude.trim().isEmpty()){
+            newStepLatitude.setError(getString(R.string.error_creation_new_step));
+        }
+        if(longitude.trim().isEmpty()){
+            newStepLongitude.setError(getString(R.string.error_creation_new_step));
         }
 
         CollectionReference stepbookRef = FirebaseFirestore.getInstance().collection("StepBook");

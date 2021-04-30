@@ -42,23 +42,23 @@
         <activity android:name=".Login.Register"
             android:theme="@style/Theme.JourneyTracking.NoStatustBar" />
         <activity
-            android:name=".mainactivity.NavigationDrawerActivity"
+            android:name=".MainActivity.NavigationDrawerActivity"
             android:launchMode="singleTop"/>
         <activity
-            android:name=".journey.NewJourneyItemActivity"
-            android:parentActivityName=".mainactivity.NavigationDrawerActivity"
+            android:name=".MainActivity.MyJourneyFragment.journey.NewJourneyItemActivity"
+            android:parentActivityName=".MainActivity.NavigationDrawerActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar" />
         <activity
-            android:name=".mainactivity.MyJourneyFragment.AddStepJourneyActivity"
+            android:name=".MainActivity.MyJourneyFragment.journey.ReviewJourneyActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".mainactivity.NavigationDrawerActivity"
+            android:parentActivityName=".MainActivity.NavigationDrawerActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar" />
         <activity
-            android:name=".step.NewStepActivity"
-            android:parentActivityName=".mainactivity.MyJourneyFragment.AddStepJourneyActivity"
+            android:name=".MainActivity.MyJourneyFragment.step.NewStepActivity"
+            android:parentActivityName=".MainActivity.MyJourneyFragment.journey.ReviewJourneyActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar" />
         <activity
-            android:name=".mainactivity.MapsActivity"
+            android:name=".MainActivity.MapsActivity"
             android:theme="@style/Theme.JourneyTracking.WithActionBar" />
     </application>
 

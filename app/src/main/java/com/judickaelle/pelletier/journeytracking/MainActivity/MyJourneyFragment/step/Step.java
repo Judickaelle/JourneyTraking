@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.step;
+package com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.step;
 
 public class Step {
     private String stepTitle;

@@ -31,8 +31,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.judickaelle.pelletier.journeytracking.mainactivity.MapsActivity;
-import com.judickaelle.pelletier.journeytracking.mainactivity.NavigationDrawerActivity;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MapsActivity;
+import com.judickaelle.pelletier.journeytracking.MainActivity.NavigationDrawerActivity;
 import com.judickaelle.pelletier.journeytracking.R;
 
 public class  Login extends AppCompatActivity {
@@ -95,6 +95,7 @@ public class  Login extends AppCompatActivity {
                                 Log.e("tag", "error : " + e);
                             }
                         } else {
+                            txtLoginGuest.getText().clear();
                             txtLoginGuest.setError(getString(R.string.accessKey_not_valid));
                         }
                     }
@@ -199,7 +200,8 @@ public class  Login extends AppCompatActivity {
                 });
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w("tag", "Google sign in failed", e);
+                Log.e("tag", "Google sign in failed", e);
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.mainactivity.MyJourneyFragment;
+package com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -32,10 +32,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.journey.ReviewJourneyActivity;
 import com.judickaelle.pelletier.journeytracking.R;
-import com.judickaelle.pelletier.journeytracking.journey.JourneyItem;
-import com.judickaelle.pelletier.journeytracking.journey.JourneyItemAdapter;
-import com.judickaelle.pelletier.journeytracking.journey.NewJourneyItemActivity;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.journey.JourneyItem;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.journey.JourneyItemAdapter;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.journey.NewJourneyItemActivity;
 
 import java.util.Objects;
 
@@ -55,7 +56,7 @@ public class MyjourneyFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_my_journey, container, false);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         journeybookRef = db.collection("JourneyBook");
@@ -72,6 +73,7 @@ public class MyjourneyFragment extends Fragment{
         });
 
         try {
+            //get the user's email
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             ownerEmail = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
             Log.d("tag", "ownerEmail recuperer : " + ownerEmail);
@@ -121,6 +123,50 @@ public class MyjourneyFragment extends Fragment{
                 return false;
             }
 
+                @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                //show an alert dialog to confirm the suppression
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setTitle(R.string.suppression_item_title);
+                builder.setMessage(R.string.suppression_item_message);
+                builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //get the documentId that user wants to delete
+                        DocumentSnapshot documentSnapshot = adapter.getSnapshots().getSnapshot(viewHolder.getAdapterPosition());
+                        String idDoc = documentSnapshot.getId();
+                        //delete all step link to the journey
+                        //first get the document step link to the particular journey
+                        Query query1 = stepbookRef.whereEqualTo("id_journey", idDoc);
+                        query1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    for(DocumentSnapshot document : task.getResult()){
+                                       //all steps found by the query are deleted
+                                        document.getReference().delete();
+                                    }
+                                    //then we delete the journey document
+                                    adapter.deleteItem(viewHolder.getAdapterPosition());
+                                }else {
+                                    Log.d("tag", "error when trying to suppress the document " +
+                                            "step link to the journey : ", task.getException());
+                                }
+                            }
+                        });
+                    }
+                });
+                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        refresh();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+
             @SuppressLint("ResourceType")
             @Override
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -144,49 +190,6 @@ public class MyjourneyFragment extends Fragment{
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
-
-                @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                //show an alert dialog to confirm the suppression
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setCancelable(true);
-                builder.setTitle(R.string.suppression_item_title);
-                builder.setMessage(R.string.suppression_item_message);
-                builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //get the documentId that user wants to delete
-                        DocumentSnapshot documentSnapshot = adapter.getSnapshots().getSnapshot(viewHolder.getAdapterPosition());
-                        String idDoc = documentSnapshot.getId();
-                        //delete all step link to the journey
-                        //first get the document step link to the particular journey
-                        Query query1 = stepbookRef.whereEqualTo("id_journey", idDoc);
-                        query1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    for(DocumentSnapshot document : task.getResult()){
-                                        document.getReference().delete();
-                                    }
-                                    //then we delete the journey document
-                                    adapter.deleteItem(viewHolder.getAdapterPosition());
-                                }else {
-                                    Log.d("tag", "error when trying to suppress the document " +
-                                            "step link to the journey : ", task.getException());
-                                }
-                            }
-                        });
-                    }
-                });
-                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        refresh();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
         }).attachToRecyclerView(homeRecyclerView);
 
         //This section handles what happens when you click on an item in the recyclerView list
@@ -198,7 +201,7 @@ public class MyjourneyFragment extends Fragment{
                 JourneyItem journeyItem = documentSnapshot.toObject(JourneyItem.class);
                 String id = documentSnapshot.getId();
                 documentSnapshot.getReference();
-                Intent i = new Intent(getContext(), AddStepJourneyActivity.class);
+                Intent i = new Intent(getContext(), ReviewJourneyActivity.class);
                 i.putExtra("journeyId", id);
                 i.putExtra("journeyTitle", journeyItem.getTitle());
                 startActivity(i);

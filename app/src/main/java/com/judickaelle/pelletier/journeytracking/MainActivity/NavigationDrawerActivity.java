@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.mainactivity;
+package com.judickaelle.pelletier.journeytracking.MainActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.judickaelle.pelletier.journeytracking.Login.Login;
 import com.judickaelle.pelletier.journeytracking.R;
-import com.judickaelle.pelletier.journeytracking.mainactivity.MyJourneyFragment.MyjourneyFragment;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.MyjourneyFragment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;

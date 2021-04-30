@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.mainactivity.MyJourneyFragment;
+package com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.journey;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -34,12 +34,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.judickaelle.pelletier.journeytracking.R;
-import com.judickaelle.pelletier.journeytracking.mainactivity.MapsActivity;
-import com.judickaelle.pelletier.journeytracking.step.NewStepActivity;
-import com.judickaelle.pelletier.journeytracking.step.Step;
-import com.judickaelle.pelletier.journeytracking.step.StepAdapter;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MapsActivity;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.step.NewStepActivity;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.step.Step;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.step.StepAdapter;
 
-public class AddStepJourneyActivity extends AppCompatActivity {
+public class ReviewJourneyActivity extends AppCompatActivity {
     private TextView textViewJourneyAccesKey;
     private int nombreEtape;
 
@@ -121,7 +121,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try{
-                    Intent i = new Intent(AddStepJourneyActivity.this, MapsActivity.class);
+                    Intent i = new Intent(ReviewJourneyActivity.this, MapsActivity.class);
                     i.putExtra("accessKey", textViewJourneyAccesKey.getText().toString());
                     startActivity(i);
                 }catch (Exception e){
@@ -158,7 +158,7 @@ public class AddStepJourneyActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 //show an alert dialog to confirm the suppression
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddStepJourneyActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ReviewJourneyActivity.this);
                 builder.setCancelable(true);
                 builder.setTitle(R.string.suppression_item_title);
                 builder.setMessage(R.string.suppression_item_message);

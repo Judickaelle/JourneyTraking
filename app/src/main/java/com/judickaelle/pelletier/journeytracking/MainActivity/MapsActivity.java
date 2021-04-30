@@ -1,4 +1,4 @@
-package com.judickaelle.pelletier.journeytracking.mainactivity;
+package com.judickaelle.pelletier.journeytracking.MainActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -30,8 +30,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.judickaelle.pelletier.journeytracking.R;
-import com.judickaelle.pelletier.journeytracking.journey.JourneyItem;
-import com.judickaelle.pelletier.journeytracking.step.Step;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.journey.JourneyItem;
+import com.judickaelle.pelletier.journeytracking.MainActivity.MyJourneyFragment.step.Step;
 
 import java.util.ArrayList;
 
@@ -109,10 +109,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    //Log.d("tag", "taille document récupérée  : " + task.getResult().size());
+                    Log.d("tag", "taille document récupérée  : " + task.getResult().size());
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                         Step step = documentSnapshot.toObject(Step.class);
                         //Log.d("tag", "numéro step  : " + step.getStepNumber() + "  titre : " + step.getStepTitle());
+                        //data are register into a list of Step
                         listStep.add(documentSnapshot.toObject(Step.class));
                     }
                     //Log.d("tag", "list size : " + listStep.size());
@@ -140,35 +141,39 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             stepOne = listStep.get(0);
             latOne = Double.parseDouble(stepOne.getLatitude());
             longOne = Double.parseDouble(stepOne.getLongitude());
-            listMarker.add(createMarker(mMap, latOne, longOne, stepOne.getStepTitle()));
+            listMarker.add(createMarker(mMap, latOne, longOne, stepOne.getStepTitle(), String.valueOf(stepOne.getStepNumber())));
 
             //move the camera
             LatLng initial = new LatLng(latOne, longOne);
             polylineOptions.add(initial);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(initial));
 
-            //zoom en 10x
-            CameraPosition cameraPos = new CameraPosition.Builder().target(initial).zoom(10).build();
+            //zoom en 7x
+            CameraPosition cameraPos = new CameraPosition.Builder().target(initial).zoom(7).build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPos));
 
             //add the other step on the map
             for (int i = 1; i < listStep.size(); i++) {
-                myStep = listStep.get(i);
-                Log.d("tag", "step " + myStep.getStepTitle());
-                latitude = Double.parseDouble(myStep.getLatitude());
-                longitude = Double.parseDouble(myStep.getLongitude());
-                polylineOptions.add(new LatLng(latitude, longitude));
-                Marker marker = createMarker(mMap, latitude, longitude, myStep.getStepTitle());
-                listMarker.add(marker);
+                try{
+                    myStep = listStep.get(i);
+                    Log.d("tag", "step " + myStep.getStepTitle());
+                    latitude = Double.parseDouble(myStep.getLatitude());
+                    longitude = Double.parseDouble(myStep.getLongitude());
+                    polylineOptions.add(new LatLng(latitude, longitude));
+                    Marker marker = createMarker(mMap, latitude, longitude, myStep.getStepTitle(), String.valueOf(myStep.getStepNumber()));
+                    listMarker.add(marker);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
             mMap.addPolyline(polylineOptions);
         }
     }
 
-
-    protected Marker createMarker(GoogleMap googleMap, double lat, double lng, String title) {
+    //create marker with the lat and long for the step
+    protected Marker createMarker(GoogleMap googleMap, double lat, double lng, String title, String stepNumber) {
         Log.d("tag", "step " + title + " added to the map");
-        return googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title).visible(true));
+        return googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(stepNumber +". "+ title).visible(true));
     }
 
     //finish the activity on button back press
